@@ -9,6 +9,12 @@ You're going to want to decompile the app with `apktool` before running this so 
 
 Both of these files are required for this tool to work as it substitutes any `@string/x_y_z` values.
 
+## Installation
+
+```
+$ pip install -r requirements.txt
+```
+
 ## Usage
 
 ```
