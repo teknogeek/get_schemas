@@ -9,16 +9,19 @@ You're going to want to decompile the app with `apktool` before running this so 
 
 Both of these files are required for this tool to work as it substitutes any `@string/x_y_z` values.
 
+## Requirements
+- Python 3.7+
+
 ## Installation
 
 ```
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 ## Usage
 
 ```
-$ ./get_schemas.py -h
+$ python3 get_schemas.py -h
 usage: get_schemas.py [-h] [-m MANIFEST] [-s STRINGS]
 
 optional arguments:
@@ -34,7 +37,7 @@ optional arguments:
 ## Example
 
 ```
-$ ./get_schemas.py -m ./com.twitter.android/AndroidManifest.xml -s ./com.twitter.android/res/values/strings.xml
+$ python3 get_schemas.py -m ./com.twitter.android/AndroidManifest.xml -s ./com.twitter.android/res/values/strings.xml
 com.twitter.android.ProfileActivity
   content://com.android.contacts
 com.twitter.app.deeplink.UrlInterpreterActivity
