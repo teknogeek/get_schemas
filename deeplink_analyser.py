@@ -34,6 +34,7 @@ def main(strings_file, manifest_file, package, apk, op):
         os.system('adb shell am start -n ' + CHROME_PACKAGE + ' -a android.intent.action.VIEW -d "file://' + POC_DEST_DIR + POC_FILENAME + '"')
 
     if op == helpers.setup.OP_TEST_WITH_ADB:
+        helpers.adb.check_device_configs(package, apk)
         for activity, handlers in deeplinks.items():
             print(activity)
             for deeplink in handlers:
