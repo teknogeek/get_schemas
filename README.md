@@ -44,3 +44,14 @@ optional arguments:
   --clear               Whether or not the script should delete the decompiled
                         directory after running (default: False)
 ```
+
+### Example
+
+```
+~ python3 deeplink_analyser.py -apk com.myorg.appname_2021-08-10.apk --package com.myorg.appname -op launch-poc
+
+Destination directory (/<path-to-decompiled-directory>) already exists. Use -f switch if you want to overwrite it.
+Finished writing POC to local file: poc.html
+./poc.html: 1 file pushed, 0 skipped. 8.6 MB/s (3300 bytes in 0.000s)
+Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }
+```
