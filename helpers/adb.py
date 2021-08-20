@@ -24,5 +24,9 @@ def pmpath(pname, serial=None, adbpath=ADB_PATH):
     return adbshell('pm path {}'.format(pname), serial=serial, adbpath=adbpath)
 
 def package_is_installed(package):
-    packages = adbshell('pm list packages -f').splitlines()
-    return packages.__contains__(package)
+    lines = adbshell('pm list packages -f').splitlines()
+    for line in lines:
+        package_name = line.decode().split('apk=')[1]
+        if package_name == package:
+            return True
+    return False

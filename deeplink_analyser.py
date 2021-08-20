@@ -6,19 +6,16 @@ import helpers.setup
 import os
 
 def main(strings_file, manifest_file, package, apk, verify):
-    activity_handlers = helpers.get_schemes.get_schemes(strings_file, manifest_file)
+    deeplinks = helpers.get_schemes.get_schemes(strings_file, manifest_file)
     if not verify:
-        for activity, handlers in activity_handlers.items():
+        for activity, handlers in deeplinks.items():
             print(activity)
             print('\n'.join(f'  {h}' for h in sorted(handlers)))
     else:
         helpers.setup.check_device_configs(package, apk)
-        for activity, handlers in activity_handlers.items():
-            print("\n" + activity + "\n")
-            for deeplink in sorted(handlers):
-                if "http" in deeplink:
-                    print(deeplink)
-                    os.system('adb shell am start -a android.intent.action.VIEW -d ' +  deeplink + ' ' + package)
+        file = helpers.setup.write_deeplinks_to_file(deeplinks)
+        os.system('adb push ' + file + '/sdcard')
+        os.system('adb shell am start -a android.intent.action.VIEW -d /sdcard/' + file)
 
 if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()

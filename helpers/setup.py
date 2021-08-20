@@ -54,10 +54,23 @@ def check_device_configs(package, apk):
     if len(devices) == 0:
         print("No devices were detected by adb")
         exit()
-
     if not helpers.adb.package_is_installed(package):
         if apk is None:
             print("Package is not installed and APK was not specified ...")
         else:
             print("Package is not installed ...")
             os.system("adb install " + apk)
+
+def write_deeplinks_to_file(activity_handlers):
+    html = "<html>\n<body>"
+    for activity, handlers in activity_handlers.items():
+        print("\n" + activity + "\n")
+        for deeplink in sorted(handlers):
+            if "http" in deeplink:
+                print("Added " + deeplink)
+                html += '<a href="' + deeplink + '">' + deeplink + '</a>\n'
+    html += "</body>\n</html>"
+    html_file = open('poc.html', 'w')
+    html_file.write(html)
+    html_file.close()
+        
