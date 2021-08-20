@@ -13,13 +13,11 @@ Supports 4 operation modes:
 
 ### Installation
 
-Install the Python dependencies by running:
-
 ```
 python3 -m pip install -r requirements.txt
 ```
 
-#### Important Notes
+**Important Notes**
 
 If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have [apktool](https://ibotpeaches.github.io/Apktool/) installed and accessible on the `$PATH`.
 
