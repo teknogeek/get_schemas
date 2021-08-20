@@ -22,7 +22,7 @@ python3 -m pip install -r requirements.txt
 
 If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have [apktool](https://ibotpeaches.github.io/Apktool/) installed and accessible on the `$PATH`.
 
-If you want to use the `launch-poc` operation mode, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`.
+If you want to use the `adb-test` or `launch-poc` operation modes, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`.
 
 ### Usage
 
