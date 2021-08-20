@@ -73,7 +73,7 @@ if __name__ == '__main__':
             exit()
         else:
             decompile_and_get_files(args.apk)
-            dir = args.apk.split(".apk")[0]
+            dir = os.path.basename(args.apk).split('.apk')[0]
             manifest_file = open(dir + "/AndroidManifest.xml")
             strings_file = open(dir + "/res/values/strings.xml")
             main(manifest_file, strings_file, args.verify, args.clear)
