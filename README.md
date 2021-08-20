@@ -27,7 +27,7 @@ If you want to use the `adb-test` or `launch-poc` operation modes, you need to h
 ### Usage
 
 ```
-~ python3 deeplink_analyser.py --help
+~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py --help
 usage: deeplink_analyser.py [-h] [-apk FILE] -p PACKAGE [-m FILE] [-s FILE]
                             -op OP [--clear]
 
@@ -41,7 +41,8 @@ optional arguments:
   -s FILE, --strings FILE
                         Path to the strings.xml file
   -op OP, --operation-mode OP
-                        Operation mode: can be "list-all", "list-applinks", "build-poc" or "launch-poc"
+                        Operation mode: "list-all", "list-applinks", "build-
+                        poc", "launch-poc", "adb-test".
   --clear               Whether or not the script should delete the decompiled
                         directory after running (default: False)
 ```
