@@ -45,11 +45,16 @@ optional arguments:
                         directory after running (default: False)
 ```
 
-### Example
+### Examples
+
+**Launch POC using APK**
 
 ```
-~ python3 deeplink_analyser.py -apk com.myorg.appname_2021-08-10.apk --package com.myorg.appname -op launch-poc
-
+~ python3 deeplink_analyser.py 
+    -op launch-poc
+    -p com.myorg.appname 
+    -apk com.myorg.appname_2021-08-10.apk
+    
 I: Using Apktool 2.5.0 on com.myorg.appname_2021-08-10.apk
 I: Loading resource table...
 I: Decoding AndroidManifest.xml with resources...
@@ -68,4 +73,16 @@ I: Copying META-INF/services directory
 Finished writing POC to local file poc.html
 ./poc.html: 1 file pushed, 0 skipped. 8.8 MB/s (3300 bytes in 0.000s)
 Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }
+```
+
+**Building POC using Manifest and strings file**
+
+```
+~ python3 deeplink_analyser.py 
+    -op build-poc
+    -p com.myorg.appname
+    -m --package com.myorg.appname_2021-08-10/AndroidManifest.xml
+    -s --package com.myorg.appname/res/values/strings.xml
+
+Finished writing POC to local file poc.html
 ```
