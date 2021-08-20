@@ -16,8 +16,9 @@ def main(strings_file, manifest_file, package, apk, verify):
     else:
         helpers.setup.check_device_configs(package, apk)
         helpers.setup.write_deeplinks_to_file(deeplinks, POC_FILENAME)
-        os.system("adb push ./poc.html /sdcard/")
+        os.system("adb push ./" + POC_FILENAME +" /sdcard/")
         os.system("adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main -a android.intent.action.VIEW -d 'file:///sdcard/" + POC_FILENAME + "'")
+        os.system("rm " + POC_FILENAME)
 
 if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()
