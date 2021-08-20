@@ -83,6 +83,10 @@ Success
 Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }
 ```
 
+As a result, your Android device should display something like this:
+
+![Screenshot_20210820-210127](https://user-images.githubusercontent.com/39055313/130288058-625056b5-c569-4597-b852-c911de1d4704.png)
+
 **Building the POC using a Manifest and strings file**
 
 ```
