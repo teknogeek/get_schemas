@@ -102,7 +102,7 @@ Press 'Enter' to test new intent ...
 Finished writing POC to local file poc.html
 ```
 
-**Launching the POC using an APK file (already decompiled) **
+**Launching the POC using an APK file (already decompiled)**
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py
