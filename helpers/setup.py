@@ -7,6 +7,8 @@ OP_LIST_ALL = 'list-all'
 OP_LIST_APPLINKS = 'list-applinks'
 OP_BUILD_POC = 'build-poc'
 OP_LAUNCH_POC = 'launch-poc'
+OP_TEST_WITH_ADB = 'adb-test'
+OP_MODES = [OP_LIST_ALL, OP_LIST_APPLINKS, OP_BUILD_POC, OP_LAUNCH_POC, OP_TEST_WITH_ADB]
 
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
@@ -43,7 +45,7 @@ def get_parsed_args():
                         dest='op',
                         required=True,
                         type=str,
-                        help='Operation mode: "' + OP_LIST_ALL + '", "' +  OP_LIST_APPLINKS + '", "' + OP_BUILD_POC + '" or "' + OP_LAUNCH_POC + '"')
+                        help='Operation mode: "' + '", "'.join(OP_MODES) + '".')
     parser.add_argument('--clear',
                         dest='clear',
                         required=False,

@@ -32,6 +32,15 @@ def main(strings_file, manifest_file, package, apk, op):
         os.system('adb push ./' + POC_FILENAME + ' ' + POC_DEST_DIR)
         os.system('adb shell am start -n ' + CHROME_PACKAGE + ' -a android.intent.action.VIEW -d "file://' + POC_DEST_DIR + POC_FILENAME + '"')
 
+    if op == helpers.setup.OP_TEST_WITH_ADB:
+        for activity, handlers in deeplinks.items():
+            print(activity)
+            for deeplink in handlers:
+                if deeplink.startswith('http'):
+                    print("\nTesting deeplink: " + deeplink)
+                    os.system('adb shell am start -a android.intent.action.VIEW -d "' + deeplink + '" ' + package)
+                    input("Press 'Enter' to test new intent ...")
+
 if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()
     if args.manifest is None or args.strings is None:
