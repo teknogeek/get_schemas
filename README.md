@@ -47,6 +47,18 @@ optional arguments:
 
 ### Examples
 
+**Building the POC using a Manifest and strings file**
+
+```
+~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py 
+	-op build-poc 
+	-p com.twitter.android 
+	-m com.twitter.android_2021-08-16/AndroidManifest.xml 
+	-s com.twitter.android_2021-08-16/res/values/strings.xml 
+
+Finished writing POC to local file poc.html
+```
+
 **Launching the POC using an APK file**
 
 ```
@@ -83,14 +95,8 @@ Success
 Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }
 ```
 
-**Building the POC using a Manifest and strings file**
+As a result, your Android device should display something like this:
 
-```
-~ python3 deeplink_analyser.py 
-    -op build-poc
-    -p com.myorg.appname
-    -m com.myorg.appname_2021-08-10/AndroidManifest.xml
-    -s com.myorg.appname_2021-08-10/res/values/strings.xml
+![Screenshot_20210820-210127](https://user-images.githubusercontent.com/39055313/130288058-625056b5-c569-4597-b852-c911de1d4704.png)
 
-Finished writing POC to local file poc.html
-```
+Then, you can manually click on each of the links: **if the OS prompts you to choose between Chrome and one or more apps, then the App Link Verification process is not correctly implemented**.
