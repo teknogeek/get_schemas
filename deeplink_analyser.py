@@ -24,6 +24,7 @@ def main(strings_file, manifest_file, package, apk, op):
                 print('\n'.join(f'  {h}' for h in sorted(handlers) if h.startswith('http')))
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
+        helpers.adb.check_device_configs(package, apk)
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
         print('Finished writing POC to local file ' + POC_FILENAME)
 
