@@ -4,7 +4,7 @@ Tool that helps with enumerating deep links in Android, and checking if the App 
 
 You can read more about App Link Verification [here](https://developer.android.com/training/app-links/verify-site-associations).
 
-Supports 4 operation modes:
+Supports 5 operation modes:
 
 * `list-all`: lists all deeplink URIs registered by the application, regardless of format
 * `list-applinks`: lists all Android App Links registered by the application
@@ -22,12 +22,12 @@ python3 -m pip install -r requirements.txt
 
 If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have [apktool](https://ibotpeaches.github.io/Apktool/) installed and accessible on the `$PATH`.
 
-If you want to use the `launch-poc` operation mode, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`.
+If you want to use the `adb-test` or `launch-poc` operation modes, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`.
 
 ### Usage
 
 ```
-~ python3 deeplink_analyser.py --help
+~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py --help
 usage: deeplink_analyser.py [-h] [-apk FILE] -p PACKAGE [-m FILE] [-s FILE]
                             -op OP [--clear]
 
@@ -41,7 +41,8 @@ optional arguments:
   -s FILE, --strings FILE
                         Path to the strings.xml file
   -op OP, --operation-mode OP
-                        Operation mode: can be "list-all", "list-applinks", "build-poc" or "launch-poc"
+                        Operation mode: "list-all", "list-applinks", "build-
+                        poc", "launch-poc", "adb-test".
   --clear               Whether or not the script should delete the decompiled
                         directory after running (default: False)
 ```
@@ -102,7 +103,7 @@ Press 'Enter' to test new intent ...
 Finished writing POC to local file poc.html
 ```
 
-**Launching the POC using an APK file (already decompiled) **
+**Launching the POC using an APK file (already decompiled)**
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py
