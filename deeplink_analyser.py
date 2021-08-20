@@ -1,24 +1,33 @@
 #!/usr/bin/env python3
 
+import helpers.setup
 import helpers.adb
 import helpers.get_schemes
-import helpers.setup
+import helpers.poc
 import os
 
 POC_FILENAME = 'poc.html'
 
-def main(strings_file, manifest_file, package, apk, verify):
+def main(strings_file, manifest_file, package, apk, op):
     deeplinks = helpers.get_schemes.get_schemes(strings_file, manifest_file)
-    if not verify:
+
+    if op == "list-all" or op == "list-applinks":
         for activity, handlers in deeplinks.items():
             print(activity)
-            print('\n'.join(f'  {h}' for h in sorted(handlers)))
-    else:
-        helpers.setup.check_device_configs(package, apk)
-        helpers.setup.write_deeplinks_to_file(deeplinks, POC_FILENAME)
+            if op == "list-all":
+                print('\n'.join(f'  {h}' for h in sorted(handlers)))
+            if op == "list-applinks":
+                print('\n'.join(f'  {h}' for h in sorted(handlers) if h.startswith('http')))
+        exit()
+
+    if op == "build-poc" or op == "launch-poc":
+        helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
+        print("Finished writing POC to local file " + POC_FILENAME)
+
+    if op == "launch-poc":
+        helpers.adb.check_device_configs(package, apk)
         os.system("adb push ./" + POC_FILENAME +" /sdcard/")
         os.system("adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main -a android.intent.action.VIEW -d 'file:///sdcard/" + POC_FILENAME + "'")
-        os.system("rm " + POC_FILENAME)
 
 if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()
@@ -31,11 +40,11 @@ if __name__ == '__main__':
             apk_filename = os.path.basename(args.apk).split('.apk')[0]
             strings_file_path = open(apk_filename + "/res/values/strings.xml")
             manifest_file_path = open(apk_filename + "/AndroidManifest.xml")
-            main(strings_file_path, manifest_file_path, args.package, args.apk, args.verify)
+            main(strings_file_path, manifest_file_path, args.package, args.apk, args.op)
             if args.clear:
                 print("Clearing decompiled directory")
                 os.system("rm -rf " + dir)
     else:
         strings_file_path = open(args.strings)
         manifest_file_path = open(args.manifest)
-        main(strings_file_path, manifest_file_path, args.package, args.apk, args.verify)
+        main(strings_file_path, manifest_file_path, args.package, args.apk, args.op)

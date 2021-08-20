@@ -34,11 +34,11 @@ def get_parsed_args():
                         metavar="FILE", 
     					type=lambda x: helpers.setup.is_valid_file(parser, x),
                         help='Path to the strings.xml file')
-    parser.add_argument('--verify',
-                        dest='verify',
-                        required=False,
-                        action='store_true',
-                        help='Whether or not the script should verify the App Links (default: False)')
+    parser.add_argument('-op', '--operation-mode',
+                        dest='op',
+                        required=True,
+                        type=str,
+                        help='Operation mode: can be "list-all", "list-applinks", "build-poc" or "launch-poc"')
     parser.add_argument('--clear',
                         dest='clear',
                         required=False,
@@ -48,27 +48,3 @@ def get_parsed_args():
 
 def decompile_apk(apk):
     os.system("apktool d " + apk)
-
-def check_device_configs(package, apk):
-    devices = helpers.adb.adbdevices()
-    if len(devices) == 0:
-        print("No devices were detected by adb")
-        exit()
-    if not helpers.adb.package_is_installed(package):
-        if apk is None:
-            print("Package is not installed and APK was not specified ...")
-        else:
-            print("Package is not installed ...")
-            os.system("adb install " + apk)
-
-def write_deeplinks_to_file(activity_handlers, poc_filename):
-    html = "<!DOCTYPE html>\n<html>\n<body>\n<div>\n"
-    for activity, handlers in activity_handlers.items():
-        html += '<h3>' + activity + '</h3>\n'
-        for deeplink in sorted(handlers):
-            if "http" in deeplink:
-                html += '<a href="' + deeplink + '">' + deeplink + '</a></br>'
-    html += "</div>\n</body>\n</html>"
-    html_file = open(poc_filename, 'w')
-    html_file.write(html)
-    html_file.close()        
