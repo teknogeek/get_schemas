@@ -77,6 +77,10 @@ Package is not installed ...
 Performing Push Install
 com.twitter.android_2021-08-16.apk: 1 .... 6.3 MB/s (89641501 bytes in 13.558s)
 	pkg: /data/local/tmp/com.twitter.android_2021-08-16.apk
+
+Success
+./poc.html: 1 file pushed, 0 skipped. 2.4 MB/s (1010 bytes in 0.000s)
+Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }
 ```
 
 **Building the POC using a Manifest and strings file**
