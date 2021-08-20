@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+from helpers.console import write_to_console
 import helpers.setup
 import helpers.adb
 import helpers.get_schemes
 import helpers.poc
+import helpers.console
 import os
 
 DEFAULT_STRINGS_FILE = '/res/values/strings.xml'
@@ -36,18 +38,18 @@ def main(strings_file, manifest_file, package, apk, op):
     if op == helpers.setup.OP_TEST_WITH_ADB:
         helpers.adb.check_device_configs(package, apk)
         for activity, handlers in deeplinks.items():
-            print(activity)
+            write_to_console('\nActivity: ' + activity + '\n', helpers.console.bcolors.BOLD)
             for deeplink in handlers:
                 if deeplink.startswith('http'):
-                    print("\nTesting deeplink: " + deeplink)
+                    write_to_console('\nTesting deeplink: ' + deeplink, helpers.console.bcolors.OKGREEN)
                     os.system('adb shell am start -a android.intent.action.VIEW -d "' + deeplink + '"')
-                    input("Press 'Enter' to test new intent ...")
+                    input("Press 'Enter' to test next App Link ...")
 
 if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()
     if args.manifest is None or args.strings is None:
         if args.apk is None:
-            print('You must specify either an APK or a manifest and strings file path')
+            write_to_console('You must specify either an APK or a manifest and strings file path', helpers.console.bcolors.FAIL)
         else:
             helpers.setup.decompile_apk(args.apk)
             apk_filename = os.path.basename(args.apk).split('.apk')[0]

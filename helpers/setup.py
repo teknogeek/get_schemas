@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import helpers.get_schemes
 import helpers.adb
 import argparse
