@@ -1,18 +1,20 @@
-# Android Deep Link Analyser
+# Android "App Link Verification" Tester
 
-Tool that helps with enumerating deep links in Android, and checking if the App Links are correctly verified.
+Tool that helps with checking if an Android application has successfully completed the "App Link Verification" process for Android App Links.
 
-You can read more about App Link Verification [here](https://developer.android.com/training/app-links/verify-site-associations).
+You can see more info about this process [here](https://developer.android.com/training/app-links/verify-site-associations).
 
-Supports 5 operation modes:
+## How does it work?
 
-* `list-all`: lists all deeplink URIs registered by the application, regardless of format
+This tool supports 5 operation modes:
+
+* `list-all`: simple enumeration, lists all deep links registered by the application regardless of format
 * `list-applinks`: lists all Android App Links registered by the application
-* `adb-test`: uses [adb](https://developer.android.com/studio/command-line/adb) to open all of the application's App Links to test if they're correctly verified
-* `build-poc`: creates an HTML page with links to all the registered Android App Links in order to simplify the process of testing their verification process
-* `launch-poc`: sends the HTML page to a connected device, and opens it with Chrome
+* `adb-test`: uses `adb` to open all of the application's App Links and allows you to check if they're being automatically opened by the intended application
+* `build-poc`: creates an HTML page with links to all of the registered Android App Links, in order to simplify the process of testing their verification process
+* `launch-poc`: sends the HTML page created on the previus mode to a connected device (via `adb`), and opens it with Chrome
 
-### Installation
+## Installation
 
 ```
 python3 -m pip install -r requirements.txt
@@ -20,11 +22,10 @@ python3 -m pip install -r requirements.txt
 
 **Important Notes**
 
-If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have [apktool](https://ibotpeaches.github.io/Apktool/) installed and accessible on the `$PATH`.
+1. If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have [apktool](https://ibotpeaches.github.io/Apktool/) installed and accessible on the `$PATH`.
+2. If you want to use the `adb-test` or `launch-poc` operation modes, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`.
 
-If you want to use the `adb-test` or `launch-poc` operation modes, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`.
-
-### Usage
+## Usage
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py --help
@@ -47,9 +48,9 @@ optional arguments:
                         directory after running (default: False)
 ```
 
-### Examples
+## Examples
 
-**Automatically testing all App Links with adb using APK**
+**Use an APK to automatically test all of the App Links using ADB**
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py 
@@ -91,7 +92,7 @@ Press 'Enter' to test new intent ...
 [...]
 ```
 
-**Building the POC using a Manifest and strings file**
+**Use the manifest and the strings file to create a POC locally**
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py 
@@ -103,7 +104,7 @@ Press 'Enter' to test new intent ...
 Finished writing POC to local file poc.html
 ```
 
-**Launching the POC using an APK file (already decompiled)**
+**Use a (previous decompiled) APK to send the POC to the device and open it with Chrome**
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py
