@@ -25,7 +25,7 @@ def main(strings_file, manifest_file, package, apk, op):
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
-        print("Finished writing POC to local file " + POC_FILENAME)
+        print('Finished writing POC to local file ' + POC_FILENAME)
 
     if op == helpers.setup.OP_LAUNCH_POC:
         helpers.adb.check_device_configs(package, apk)
@@ -44,8 +44,8 @@ if __name__ == '__main__':
             manifest_file_path = open(apk_filename + DEFAULT_MANIFEST_FILE)
             main(strings_file_path, manifest_file_path, args.package, args.apk, args.op)
             if args.clear:
-                print("Clearing decompiled directory")
-                os.system("rm -rf " + dir)
+                print('Clearing decompiled directory')
+                os.system('rm -rf ' + dir)
     else:
         strings_file_path = open(args.strings)
         manifest_file_path = open(args.manifest)

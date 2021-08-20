@@ -14,6 +14,13 @@ def adbdevices(adbpath=ADB_PATH):
             devices.append(line.decode().split('\t')[0])
     return set(devices)
 
+def adbshell(command, serial=None, adbpath=ADB_PATH):
+    args = [adbpath]
+    if serial is not None:
+        args.extend(['-s', serial])
+    args.extend(['shell', command])
+    return subprocess.check_output(args)
+
 def package_is_installed(package):
     lines = adbshell('pm list packages -f').splitlines()
     for line in lines:
@@ -33,10 +40,3 @@ def check_device_configs(package, apk):
         else:
             print("Package is not installed ...")
             os.system("adb install " + apk)
-
-def adbshell(command, serial=None, adbpath=ADB_PATH):
-    args = [adbpath]
-    if serial is not None:
-        args.extend(['-s', serial])
-    args.extend(['shell', command])
-    return subprocess.check_output(args)
