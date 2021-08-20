@@ -1,4 +1,4 @@
-# Android App Link Verification Tester
+# Android "App Link Verification" Tester
 
 Tool that helps with checking if an Android application has successfully completed the "App Link Verification" process for Android App Links.
 
