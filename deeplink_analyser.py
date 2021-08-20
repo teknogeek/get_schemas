@@ -18,7 +18,6 @@ def main(strings_file, manifest_file, package, apk, op):
                 print('\n'.join(f'  {h}' for h in sorted(handlers)))
             if op == "list-applinks":
                 print('\n'.join(f'  {h}' for h in sorted(handlers) if h.startswith('http')))
-        exit()
 
     if op == "build-poc" or op == "launch-poc":
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
