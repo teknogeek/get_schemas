@@ -46,7 +46,7 @@ def get_parsed_args():
                         help='Whether or not the script should delete the decompiled directory after running (default: False)')
     return parser.parse_args()
 
-def decompile_and_get_files(apk):
+def decompile_apk(apk):
     os.system("apktool d " + apk)
 
 def check_device_configs(package, apk):

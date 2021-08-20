@@ -24,10 +24,10 @@ if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()
     if args.manifest is None or args.strings is None:
         if args.apk is None:
-            print("You must specify either an APK or the manifest and strins file path")
+            print("You must specify either an APK or the manifest and strings file path")
             exit()
         else:
-            helpers.setup.decompile_and_get_files(args.apk)
+            helpers.setup.decompile_apk(args.apk)
             apk_filename = os.path.basename(args.apk).split('.apk')[0]
             manifest_file = open(apk_filename + "/AndroidManifest.xml")
             strings_file = open(apk_filename + "/res/values/strings.xml")
