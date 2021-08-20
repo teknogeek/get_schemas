@@ -87,6 +87,8 @@ As a result, your Android device should display something like this:
 
 ![Screenshot_20210820-210127](https://user-images.githubusercontent.com/39055313/130288058-625056b5-c569-4597-b852-c911de1d4704.png)
 
+Then, you can manually click on each of the links: **if the OS prompts you to choose between Chrome and one or more apps, then the App Link Verification process is not correctly implemented**.
+
 **Building the POC using a Manifest and strings file**
 
 ```
