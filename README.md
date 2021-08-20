@@ -75,7 +75,7 @@ Finished writing POC to local file poc.html
 Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }
 ```
 
-**Building POC using a Manifest and strings file**
+**Building the POC using a Manifest and strings file**
 
 ```
 ~ python3 deeplink_analyser.py 
