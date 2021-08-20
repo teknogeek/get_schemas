@@ -1,6 +1,7 @@
 # Android Deep Link Analyser
 
-Tool that 
+Tool that helps with enumerating an Android application's deep links, and checking if the App Links are correctly verified.
+You can read more about App Link Verification [here](https://developer.android.com/training/app-links/verify-site-associations).
 
 * `list-all`: lists all deeplink URIs registered by the application, regardless of format
 * `list-applinks`: lists all Android App Links registered by the application
@@ -15,9 +16,11 @@ Install the Python dependencies by running:
 python3 -m pip install -r requirements.txt
 ```
 
-If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have `apktool` installed and accessible on the `$PATH`.
+#### Important Notes
 
-If you want to use the `launch-poc` operation mode, you need to have `adb` installed and accessible on the `$PATH`.
+If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have [apktool](https://ibotpeaches.github.io/Apktool/) installed and accessible on the `$PATH`.
+
+If you want to use the `launch-poc` operation mode, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`.
 
 ### Usage
 
