@@ -3,6 +3,11 @@ import helpers.adb
 import argparse
 import os
 
+OP_LIST_ALL = 'list-all'
+OP_LIST_APPLINKS = 'list-applinks'
+OP_BUILD_POC = 'build-poc'
+OP_LAUNCH_POC = 'launch-poc'
+
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
         parser.error("The file %s does not exist!" % arg)
@@ -38,7 +43,7 @@ def get_parsed_args():
                         dest='op',
                         required=True,
                         type=str,
-                        help='Operation mode: can be "list-all", "list-applinks", "build-poc" or "launch-poc"')
+                        help='Operation mode: "' + OP_LIST_ALL + '", "' +  OP_LIST_APPLINKS + '", "' + OP_BUILD_POC + '" or "' + OP_LAUNCH_POC + '"')
     parser.add_argument('--clear',
                         dest='clear',
                         required=False,
