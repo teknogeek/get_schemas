@@ -36,7 +36,7 @@ def verify_schemes(activity_handlers, package, apk):
         for deeplink in sorted(handlers):
             if "http" in deeplink:
                 print(deeplink)
-                os.system("adb shell am start -W -a android intent.action.VIEW -d " + deeplink)
+                os.system("adb shell am start -a android.intent.action.VIEW -d " +  deeplink + " " + package)
 
 def main(manifest, strings, package, apk, verify):
     activity_handlers = get_schemes_helper.get_schemes(strings, manifest)
