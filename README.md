@@ -1,3 +1,3 @@
 # Android Deep Link Analyser
-## List all deep links and verifies Android App Links
+List all deep links and verifies Android App Links
 
