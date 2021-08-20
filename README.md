@@ -8,6 +8,7 @@ Supports 4 operation modes:
 
 * `list-all`: lists all deeplink URIs registered by the application, regardless of format
 * `list-applinks`: lists all Android App Links registered by the application
+* `adb-test`: uses [adb](https://developer.android.com/studio/command-line/adb) to open all of the application's App Links to test if they're correctly verified
 * `build-poc`: creates an HTML page with links to all the registered Android App Links in order to simplify the process of testing their verification process
 * `launch-poc`: sends the HTML page to a connected device, and opens it with Chrome
 
@@ -47,25 +48,13 @@ optional arguments:
 
 ### Examples
 
-**Building the POC using a Manifest and strings file**
+**Automatically testing all App Links with adb using APK**
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py 
-	-op build-poc 
+	-op adb-test
 	-p com.twitter.android 
-	-m com.twitter.android_2021-08-16/AndroidManifest.xml 
-	-s com.twitter.android_2021-08-16/res/values/strings.xml 
-
-Finished writing POC to local file poc.html
-```
-
-**Launching the POC using an APK file**
-
-```
-~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py
-    -op launch-poc
-    -p com.twitter.android
-    -apk com.twitter.android_2021-08-16.apk
+	-apk com.twitter.android_2021-08-16.apk
 I: Using Apktool 2.5.0 on com.twitter.android_2021-08-16.apk
 I: Loading resource table...
 I: Decoding AndroidManifest.xml with resources...
@@ -84,15 +73,47 @@ I: Copying assets and libs...
 I: Copying unknown files...
 I: Copying original files...
 I: Copying META-INF/services directory
-Finished writing POC to local file poc.html
-Package is not installed ...
-Performing Push Install
-com.twitter.android_2021-08-16.apk: 1 .... 6.3 MB/s (89641501 bytes in 13.558s)
-	pkg: /data/local/tmp/com.twitter.android_2021-08-16.apk
+com.twitter.app.profiles.ProfileActivity
+com.twitter.deeplink.implementation.UrlInterpreterActivity
 
-Success
-./poc.html: 1 file pushed, 0 skipped. 2.4 MB/s (1010 bytes in 0.000s)
-Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }
+Testing deeplink: https://mobile.twitter.com/.*
+Starting: Intent { act=android.intent.action.VIEW dat=https://mobile.twitter.com/... pkg=com.twitter.android }
+Press 'Enter' to test new intent ...
+
+Testing deeplink: http://twitter.com/.*
+Starting: Intent { act=android.intent.action.VIEW dat=http://twitter.com/... pkg=com.twitter.android }
+Press 'Enter' to test new intent ...
+
+Testing deeplink: http://mobile.twitter.com/.*
+Starting: Intent { act=android.intent.action.VIEW dat=http://mobile.twitter.com/... pkg=com.twitter.android }
+Press 'Enter' to test new intent ...
+[...]
+```
+
+**Building the POC using a Manifest and strings file**
+
+```
+~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py 
+	-op build-poc 
+	-p com.twitter.android 
+	-m com.twitter.android_2021-08-16/AndroidManifest.xml 
+	-s com.twitter.android_2021-08-16/res/values/strings.xml 
+
+Finished writing POC to local file poc.html
+```
+
+**Launching the POC using an APK file (already decompiled) **
+
+```
+~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py
+	-op launch-poc
+	-p com.twitter.android
+	-apk com.twitter.android_2021-08-16.apk 
+
+Destination directory (/Users/inesmartins/Desktop/com.twitter.android_2021-08-16) already exists. Use -f switch if you want to overwrite it.
+Finished writing POC to local file poc.html
+./poc.html: 1 file pushed, 0 skipped. 1.2 MB/s (1010 bytes in 0.001s)
+Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }```
 ```
 
 As a result, your Android device should display something like this:
