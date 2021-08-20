@@ -1,34 +1,20 @@
 #!/usr/bin/env python3
 
-import argparse
+from typing import List
 from bs4 import BeautifulSoup
 import itertools
 import re
-import sys
 
 is_scheme_data_tag = lambda tag: tag.name == 'data' and \
     any(f'android:{x}' in tag.attrs for x in \
         ('scheme', 'host', 'port', 'path', 'pathPrefix', 'pathPattern') \
     )
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--manifest', 
-                        required=False,
-                        default='AndroidManifest.xml',
-                        type=argparse.FileType('r'),
-                        help='Path to AndroidManifest.xml (default: ./AndroidManifest.xml)')
-    parser.add_argument('-s', '--strings',
-                        required=False,
-                        default='res/values/strings.xml',
-                        type=argparse.FileType('r'), 
-                        help='Path to strings.xml (default: ./res/values/strings.xml)')
-    args = parser.parse_args()
-
-    strings_xml = BeautifulSoup(args.strings, 'xml')
+def get_schemes(strings, manifest):
+    strings_xml = BeautifulSoup(strings, 'xml')
     strings = {d['name']: d.text for d in strings_xml.find_all('string', {'name': True})}
 
-    raw_manifest = args.manifest.read()
+    raw_manifest = manifest.read()
     raw_manifest = re.sub('"@string\/(?P<string_name>[^"]+)"', lambda g: '"{}"'.format(strings.get(g.group('string_name'), 'UNKNOWN_STRING')), raw_manifest)
     manifest_xml = BeautifulSoup(raw_manifest, 'xml')
 
@@ -77,10 +63,4 @@ def main():
                         
                         activity_handlers[activity_name] = list(set(activity_handlers.get(activity_name, []) + [uri]))
 
-    for activity, handlers in activity_handlers.items():
-        print(activity)
-        print('\n'.join(f'  {h}' for h in sorted(handlers)))
-
-
-if __name__ == '__main__':
-    main()
+    return activity_handlers
