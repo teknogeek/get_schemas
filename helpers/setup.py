@@ -61,16 +61,14 @@ def check_device_configs(package, apk):
             print("Package is not installed ...")
             os.system("adb install " + apk)
 
-def write_deeplinks_to_file(activity_handlers):
-    html = "<html>\n<body>"
+def write_deeplinks_to_file(activity_handlers, poc_filename):
+    html = "<!DOCTYPE html>\n<html>\n<body>\n<div>\n"
     for activity, handlers in activity_handlers.items():
-        print("\n" + activity + "\n")
+        html += '<h3>' + activity + '</h3>\n'
         for deeplink in sorted(handlers):
             if "http" in deeplink:
-                print("Added " + deeplink)
-                html += '<a href="' + deeplink + '">' + deeplink + '</a>\n'
-    html += "</body>\n</html>"
-    html_file = open('poc.html', 'w')
+                html += '<a href="' + deeplink + '">' + deeplink + '</a></br>'
+    html += "</div>\n</body>\n</html>"
+    html_file = open(poc_filename, 'w')
     html_file.write(html)
-    html_file.close()
-        
+    html_file.close()        

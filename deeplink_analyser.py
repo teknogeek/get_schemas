@@ -5,6 +5,8 @@ import helpers.get_schemes
 import helpers.setup
 import os
 
+POC_FILENAME = 'poc.html'
+
 def main(strings_file, manifest_file, package, apk, verify):
     deeplinks = helpers.get_schemes.get_schemes(strings_file, manifest_file)
     if not verify:
@@ -13,9 +15,9 @@ def main(strings_file, manifest_file, package, apk, verify):
             print('\n'.join(f'  {h}' for h in sorted(handlers)))
     else:
         helpers.setup.check_device_configs(package, apk)
-        file = helpers.setup.write_deeplinks_to_file(deeplinks)
-        os.system('adb push ' + file + '/sdcard')
-        os.system('adb shell am start -a android.intent.action.VIEW -d /sdcard/' + file)
+        helpers.setup.write_deeplinks_to_file(deeplinks, POC_FILENAME)
+        os.system("adb push ./poc.html /sdcard/")
+        os.system("adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main -a android.intent.action.VIEW -d 'file:///sdcard/" + POC_FILENAME + "'")
 
 if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()

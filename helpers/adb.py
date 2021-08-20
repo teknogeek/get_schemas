@@ -20,9 +20,6 @@ def adbshell(command, serial=None, adbpath=ADB_PATH):
     args.extend(['shell', command])
     return subprocess.check_output(args)
 
-def pmpath(pname, serial=None, adbpath=ADB_PATH):
-    return adbshell('pm path {}'.format(pname), serial=serial, adbpath=adbpath)
-
 def package_is_installed(package):
     lines = adbshell('pm list packages -f').splitlines()
     for line in lines:
