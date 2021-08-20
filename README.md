@@ -1,6 +1,6 @@
 # Android Deep Link Analyser
 
-Tool that helps with enumerating an Android application's deep links, and checking if the App Links are correctly verified.
+Tool that helps with enumerating deep links in Android, and checking if the App Links are correctly verified.
 
 You can read more about App Link Verification [here](https://developer.android.com/training/app-links/verify-site-associations).
 
@@ -47,7 +47,7 @@ optional arguments:
 
 ### Examples
 
-**Launch POC using APK**
+**Launching the POC using an APK file**
 
 ```
 ~ python3 deeplink_analyser.py 
@@ -75,7 +75,7 @@ Finished writing POC to local file poc.html
 Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }
 ```
 
-**Building POC using Manifest and strings file**
+**Building POC using a Manifest and strings file**
 
 ```
 ~ python3 deeplink_analyser.py 
