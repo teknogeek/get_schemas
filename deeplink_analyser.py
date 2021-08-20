@@ -7,6 +7,7 @@ import helpers.poc
 import os
 
 POC_FILENAME = 'poc.html'
+CHROME_PACKAGE = 'com.android.chrome/com.google.android.apps.chrome.Main'
 
 def main(strings_file, manifest_file, package, apk, op):
     deeplinks = helpers.get_schemes.get_schemes(strings_file, manifest_file)
@@ -25,8 +26,8 @@ def main(strings_file, manifest_file, package, apk, op):
 
     if op == "launch-poc":
         helpers.adb.check_device_configs(package, apk)
-        os.system("adb push ./" + POC_FILENAME +" /sdcard/")
-        os.system("adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main -a android.intent.action.VIEW -d 'file:///sdcard/" + POC_FILENAME + "'")
+        os.system("adb push ./" + POC_FILENAME + " /sdcard/")
+        os.system("adb shell am start -n " + CHROME_PACKAGE + " -a android.intent.action.VIEW -d 'file:///sdcard/" + POC_FILENAME + "'")
 
 if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()
