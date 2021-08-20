@@ -81,8 +81,8 @@ Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cm
 ~ python3 deeplink_analyser.py 
     -op build-poc
     -p com.myorg.appname
-    -m --package com.myorg.appname_2021-08-10/AndroidManifest.xml
-    -s --package com.myorg.appname_2021-08-10/res/values/strings.xml
+    -m com.myorg.appname_2021-08-10/AndroidManifest.xml
+    -s com.myorg.appname_2021-08-10/res/values/strings.xml
 
 Finished writing POC to local file poc.html
 ```
