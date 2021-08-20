@@ -38,7 +38,7 @@ def main(strings_file, manifest_file, package, apk, op):
             for deeplink in handlers:
                 if deeplink.startswith('http'):
                     print("\nTesting deeplink: " + deeplink)
-                    os.system('adb shell am start -a android.intent.action.VIEW -d "' + deeplink + '" ' + package)
+                    os.system('adb shell am start -a android.intent.action.VIEW -d "' + deeplink + '"')
                     input("Press 'Enter' to test new intent ...")
 
 if __name__ == '__main__':
