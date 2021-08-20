@@ -1,6 +1,6 @@
 # Android Deep Link Analyser
 
-Tool that helps with enumerating an Android application's deep links, and checking if the App Links are correctly verified.
+Tool that helps with enumerating deep links in Android, and checking if the App Links are correctly verified.
 
 You can read more about App Link Verification [here](https://developer.android.com/training/app-links/verify-site-associations).
 
