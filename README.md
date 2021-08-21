@@ -53,8 +53,8 @@ optional arguments:
 **Use an APK to automatically test all of the App Links using ADB**
 
 ```
-~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py 
-	-op adb-test
+~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
+	-op adb-test \
 	-p com.twitter.android 
 	-apk com.twitter.android_2021-08-16.apk
 I: Using Apktool 2.5.0 on com.twitter.android_2021-08-16.apk
@@ -95,10 +95,10 @@ Press 'Enter' to test new intent ...
 **Use the manifest and the strings file to create a POC locally**
 
 ```
-~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py 
-	-op build-poc 
-	-p com.twitter.android 
-	-m com.twitter.android_2021-08-16/AndroidManifest.xml 
+~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
+	-op build-poc \
+	-p com.twitter.android \
+	-m com.twitter.android_2021-08-16/AndroidManifest.xml \
 	-s com.twitter.android_2021-08-16/res/values/strings.xml 
 
 Finished writing POC to local file poc.html
@@ -107,9 +107,9 @@ Finished writing POC to local file poc.html
 **Use a (previous decompiled) APK to send the POC to the device and open it with Chrome**
 
 ```
-~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py
-	-op launch-poc
-	-p com.twitter.android
+~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
+	-op launch-poc \
+	-p com.twitter.android \
 	-apk com.twitter.android_2021-08-16.apk 
 
 Destination directory (/Users/inesmartins/Desktop/com.twitter.android_2021-08-16) already exists. Use -f switch if you want to overwrite it.
