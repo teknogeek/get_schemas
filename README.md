@@ -70,7 +70,7 @@ Note that the package was not installed on the phone previously, so the script i
 
 ![Screenshot 2021-08-22 at 17 16 51](https://user-images.githubusercontent.com/39055313/130362373-0d8ec96d-0bcd-4a92-87a9-4cd19b54db10.png)
 
-### Use the manifest and the strings file to create a POC locally
+### Use the manifest+strings file to create a local POC
 
 ![Screenshot 2021-08-22 at 17 16 23](https://user-images.githubusercontent.com/39055313/130362354-a844c72f-11c2-44d0-9a1c-9d66771c915f.png)
 
