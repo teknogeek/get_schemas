@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from re import A
 from deeplink_analyser import APKTOOL_PATH
 import helpers.get_schemes
 import helpers.adb
@@ -57,6 +58,7 @@ def get_parsed_args():
                         action='store_true',
                         help='Whether or not the script should delete the decompiled directory after running (default: False)')
     args = parser.parse_args()
+    print(args.manifest)
     if args.manifest is None or args.strings is None:
         if args.apk is None:
             error_msg = 'You must specify either an APK or a manifest and strings file path'
