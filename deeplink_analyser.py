@@ -43,13 +43,7 @@ def main(strings_file, manifest_file, package, apk, op):
         sha256 = apk_cert.split('SHA256: ')[1].split('\n')[0]
         domains = helpers.app_links.get_protocol_and_domain_dict(deeplinks)
         for domain in domains:
-            url = 'https://' + domain
-            helpers.console.write_to_console('\nChecking DAL for ' + url, color=helpers.console.bcolors.OKBLUE)
-            if helpers.app_links.check_dal(url, sha256):
-                helpers.console.write_to_console('Certificate\'s SHA-256 was found inside DAL.', helpers.console.bcolors.OKGREEN)
-            else:
-                helpers.console.write_to_console('Certificate\'s SHA-256 was not found inside DAL.', helpers.console.bcolors.FAIL)
-
+            helpers.app_links.check_dal('https://' + domain, sha256)
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
