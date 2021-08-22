@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from re import S
 from helpers.console import write_to_console
 import helpers.setup
 import helpers.adb
@@ -41,20 +42,18 @@ def main(strings_file, manifest_file, package, apk, op):
             KEYTOOL_PATH + ' -printcert -jarfile ' + apk, shell=True, stdout=subprocess.PIPE
         ).stdout.read().decode()
         sha256 = apk_cert.split('SHA256: ')[1].split('\n')[0]
-        dict = helpers.app_links.get_protocol_and_domain_dict(deeplinks)
-        for domain in dict:
-            for protocol in dict.get(domain):
-                url = protocol + '://' + domain
-                helpers.console.write_to_console('\nChecking DAL for ' + url, color=helpers.console.bcolors.OKBLUE)
-                dal = subprocess.Popen(
-                    'curl ' + url + DEFAULT_DAL_FILE + ' -s', shell=True, stdout=subprocess.PIPE
-                ).stdout.read().decode()
-                if sha256 in dal:
-                    helpers.console.write_to_console('Certificate\'s SHA-256 was found inside DAL.', helpers.console.bcolors.OKGREEN)
-                else:
-                    helpers.console.write_to_console('Certificate\'s SHA-256 was not found inside DAL.', helpers.console.bcolors.FAIL)
-                if args.verbose:
-                    print(dal)
+        domains = helpers.app_links.get_protocol_and_domain_dict(deeplinks)
+        for domain in domains:
+            url = 'https://' + domain
+            helpers.console.write_to_console('\nChecking DAL for ' + url, color=helpers.console.bcolors.OKBLUE)
+            dal = subprocess.Popen(
+                'curl ' + url + DEFAULT_DAL_FILE + ' -s', shell=True, stdout=subprocess.PIPE
+            ).stdout.read().decode()
+            if sha256 in dal:
+                helpers.console.write_to_console('Certificate\'s SHA-256 was found inside DAL.', helpers.console.bcolors.OKGREEN)
+            else:
+                helpers.console.write_to_console('Certificate\'s SHA-256 was not found inside DAL.', helpers.console.bcolors.FAIL)
+            print(dal)
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
