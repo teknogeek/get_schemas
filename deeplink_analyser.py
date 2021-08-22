@@ -12,8 +12,8 @@ import subprocess
 
 APKTOOL_PATH = 'apktool'
 ADB_PATH = 'adb'
-
-
+KEYTOOL_PATH = 'keytool'
+DEFAULT_DAL_FILE = '/.well-known/assetlinks.json'
 DEFAULT_STRINGS_FILE = '/res/values/strings.xml'
 DEFAULT_MANIFEST_FILE = '/AndroidManifest.xml'
 POC_FILENAME = 'poc.html'
@@ -38,7 +38,7 @@ def main(strings_file, manifest_file, package, apk, op):
     
     if op == helpers.setup.OP_CHECK_DALS:
         apk_cert = subprocess.Popen(
-            'keytool -printcert -jarfile ' + apk, shell=True, stdout=subprocess.PIPE
+            KEYTOOL_PATH + ' -printcert -jarfile ' + apk, shell=True, stdout=subprocess.PIPE
         ).stdout.read().decode()
         sha256 = apk_cert.split('SHA256: ')[1].split('\n')[0]
         dict = helpers.app_links.get_protocol_and_domain_dict(deeplinks)
@@ -47,12 +47,12 @@ def main(strings_file, manifest_file, package, apk, op):
                 url = protocol + '://' + domain
                 helpers.console.write_to_console('\nChecking DAL for ' + url, color=helpers.console.bcolors.OKBLUE)
                 dal = subprocess.Popen(
-                    'curl ' + url + '/.well-known/assetlinks.json -s', shell=True, stdout=subprocess.PIPE
+                    'curl ' + url + DEFAULT_DAL_FILE + ' -s', shell=True, stdout=subprocess.PIPE
                 ).stdout.read().decode()
                 if sha256 in dal:
-                    helpers.console.write_to_console('Certificate\'s SHA-256 was found inside DAL!', helpers.console.bcolors.OKGREEN)
+                    helpers.console.write_to_console('Certificate\'s SHA-256 was found inside DAL.', helpers.console.bcolors.OKGREEN)
                 else:
-                    helpers.console.write_to_console('Certificate\'s SHA-256 was not found inside DAL!', helpers.console.bcolors.FAIL)
+                    helpers.console.write_to_console('Certificate\'s SHA-256 was not found inside DAL.', helpers.console.bcolors.FAIL)
                 if args.verbose:
                     print(dal)
 
