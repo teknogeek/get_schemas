@@ -52,73 +52,19 @@ optional arguments:
 
 ## Examples
 
-**Use an APK to print DALs for all registered App Links**
+### Use an APK to list all registered deep links
 
-```
-~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
-  -op check-dals \
-  -apk com.twitter.android_2021-08-16.apk
+![Screenshot 2021-08-22 at 16 43 03](https://user-images.githubusercontent.com/39055313/130361357-cfdfd212-88b7-4f7e-8c2f-64b28cf5e01b.png)
 
-I: Using Apktool 2.5.0 on com.twitter.android_2021-08-16.apk
-I: Loading resource table...
-I: Decoding AndroidManifest.xml with resources...
-I: Loading resource table from file: /Users/inesmartins/Library/apktool/framework/1.apk
-I: Regular manifest package...
-I: Decoding file-resources...
-I: Decoding values */* XMLs...
-I: Baksmaling classes.dex...
-I: Baksmaling classes2.dex...
-I: Baksmaling classes3.dex...
-I: Baksmaling classes4.dex...
-I: Baksmaling classes5.dex...
-I: Baksmaling classes6.dex...
-I: Baksmaling classes7.dex...
-I: Copying assets and libs...
-I: Copying unknown files...
-I: Copying original files...
-I: Copying META-INF/services directory
+### Use an (already decompiled) APK to list all registered Android App links
 
-Checking DAL for https://mobile.twitter.com
-[
-  ...
-  {
-    "relation": [
-      "delegate_permission/common.get_login_creds",
-      "delegate_permission/common.handle_all_urls",
-      "delegate_permission/common.use_as_origin"
-    ],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "com.twitter.android",
-      "sha256_cert_fingerprints": [
-        "0F:D9:A0:CF:B0:7B:65:95:09:97:B4:EA:EB:DC:53:93:13:92:39:1A:A4:06:53:8A:3B:04:07:3B:C2:CE:2F:E9"
-      ]
-    }
-  },...
-]
-Checking DAL for https://mobile.twitter.com
-[
-  ...
-  {
-    "relation": [
-      "delegate_permission/common.get_login_creds",
-      "delegate_permission/common.handle_all_urls",
-      "delegate_permission/common.use_as_origin"
-    ],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "com.twitter.android",
-      "sha256_cert_fingerprints": [
-        "0F:D9:A0:CF:B0:7B:65:95:09:97:B4:EA:EB:DC:53:93:13:92:39:1A:A4:06:53:8A:3B:04:07:3B:C2:CE:2F:E9"
-      ]
-    }
-  },
-  ...
-]
-...
-```
+![Screenshot 2021-08-22 at 16 43 25](https://user-images.githubusercontent.com/39055313/130361377-e69c5595-b8a0-47ad-b6b5-e747ea2b4134.png)
 
-**Use an APK to automatically test all of the App Links using ADB**
+### Use an (already decompiled) APK to check for DALs for all App Links
+
+![Screenshot 2021-08-22 at 16 43 53](https://user-images.githubusercontent.com/39055313/130361397-e7bd5323-42f2-4a79-a809-5c1bd8049f8a.png)
+
+### Use an (already decompiled) APK to automatically test all of the App Links using ADB
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
