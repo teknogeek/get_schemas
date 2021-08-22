@@ -19,7 +19,7 @@ DEFAULT_MANIFEST_FILE = '/AndroidManifest.xml'
 POC_FILENAME = 'poc.html'
 POC_DEST_DIR = '/sdcard/'
 
-def main(strings_file, manifest_file, package, apk, op):
+def main(strings_file, manifest_file, package, apk, op, verbose):
     deeplinks = helpers.get_schemes.get_schemes(strings_file, manifest_file)
 
     if op == helpers.setup.OP_LIST_ALL or op == helpers.setup.OP_LIST_APPLINKS:
@@ -41,9 +41,9 @@ def main(strings_file, manifest_file, package, apk, op):
             KEYTOOL_PATH + ' -printcert -jarfile ' + apk, shell=True, stdout=subprocess.PIPE
         ).stdout.read().decode()
         sha256 = apk_cert.split('SHA256: ')[1].split('\n')[0]
-        domains = helpers.app_links.get_protocol_and_domain_dict(deeplinks)
+        domains = helpers.app_links.get_domains_for_applinks(deeplinks)
         for domain in domains:
-            helpers.app_links.check_dal('https://' + domain, sha256)
+            helpers.app_links.check_dal('https://' + domain, sha256, verbose)
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
@@ -74,11 +74,11 @@ if __name__ == '__main__':
         apk_filename = os.path.basename(args.apk).split('.apk')[0]
         strings_file_path = open(apk_filename + DEFAULT_STRINGS_FILE)
         manifest_file_path = open(apk_filename + DEFAULT_MANIFEST_FILE)
-        main(strings_file_path, manifest_file_path, args.package, args.apk, args.op)
+        main(strings_file_path, manifest_file_path, args.package, args.apk, args.op, args.verbose)
         if args.clear:
             print('Clearing decompiled directory')
             os.system('rm -rf ' + dir)
     else:
         strings_file_path = open(args.strings)
         manifest_file_path = open(args.manifest)
-        main(strings_file_path, manifest_file_path, args.package, args.apk, args.op)
+        main(strings_file_path, manifest_file_path, args.package, args.apk, args.op, args.verbose)
