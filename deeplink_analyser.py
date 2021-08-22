@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from re import S
-from helpers.console import write_to_console
 import helpers.setup
 import helpers.adb
 import helpers.get_schemes
