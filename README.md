@@ -56,9 +56,9 @@ optional arguments:
 
 ![Screenshot 2021-08-22 at 16 43 03](https://user-images.githubusercontent.com/39055313/130361357-cfdfd212-88b7-4f7e-8c2f-64b28cf5e01b.png)
 
-### Use an (already decompiled) APK to list all registered Android App links
+### Use the manifest+strings file to list all registered Android App links
 
-![Screenshot 2021-08-22 at 16 43 25](https://user-images.githubusercontent.com/39055313/130361377-e69c5595-b8a0-47ad-b6b5-e747ea2b4134.png)
+![Screenshot 2021-08-22 at 16 57 25](https://user-images.githubusercontent.com/39055313/130361750-a6688560-35b5-4a7b-a2cc-a803ca78c039.png)
 
 ### Use an (already decompiled) APK to check for DALs for all App Links
 
