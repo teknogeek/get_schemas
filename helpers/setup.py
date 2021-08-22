@@ -52,7 +52,12 @@ def get_parsed_args():
                         required=False,
     					type=str,
                         help='Package identifier, e.g.: "com.myorg.appname" (required for any operation that interacts with the device)')
-    parser.add_argument('--clear',
+    parser.add_argument('-v', '--verbose',
+                        dest='verbose',
+                        required=False,
+                        action='store_true',
+                        help='Verbose mode')
+    parser.add_argument('-c', '--clear',
                         dest='clear',
                         required=False,
                         action='store_true',
