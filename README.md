@@ -6,7 +6,7 @@ You can see more info about this process [here](https://developer.android.com/tr
 
 ## How does it work?
 
-This tool supports 5 operation modes:
+This tool supports 6 operation modes:
 
 * `list-all`: simple enumeration, lists all deep links registered by the application regardless of format
 * `list-applinks`: lists all Android App Links registered by the application
