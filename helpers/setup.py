@@ -51,7 +51,7 @@ def get_parsed_args():
                         dest="package",
                         required=False,
     					type=str,
-                        help='Package identifier, e.g.: "com.myorg.appname" (required for any operation that interacts with the device)')
+                        help='Package identifier, e.g.: "com.myorg.appname" (required for some operation modes)')
     parser.add_argument('-v', '--verbose',
                         dest='verbose',
                         required=False,
@@ -77,7 +77,7 @@ def get_parsed_args():
         error_msg += '\nSupported operation modes: "' + '", "'.join(OP_MODES) + '".'
         helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
         exit()
-    if args.op == OP_TEST_WITH_ADB or args.op == OP_LAUNCH_POC:
+    if args.op == OP_TEST_WITH_ADB or args.op == OP_LAUNCH_POC or args.op == OP_CHECK_DALS:
         if args.package is None:
             error_msg = 'You must specify the package id in order to use this operation mode'
             helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)

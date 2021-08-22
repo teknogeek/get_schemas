@@ -43,7 +43,7 @@ def main(strings_file, manifest_file, package, apk, op, verbose):
         sha256 = apk_cert.split('SHA256: ')[1].split('\n')[0]
         domains = helpers.app_links.get_domains_for_applinks(deeplinks)
         for domain in domains:
-            helpers.app_links.check_dal('https://' + domain, sha256, verbose)
+            helpers.app_links.check_dal('https://' + domain, sha256, package, verbose)
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
