@@ -6,6 +6,7 @@ import helpers.adb
 import helpers.get_schemes
 import helpers.poc
 import helpers.console
+import helpers.app_links
 import os
 
 DEFAULT_STRINGS_FILE = '/res/values/strings.xml'
@@ -21,9 +22,17 @@ def main(strings_file, manifest_file, package, apk, op):
         for activity, handlers in deeplinks.items():
             print(activity)
             if op == helpers.setup.OP_LIST_ALL:
-                print('\n'.join(f'  {h}' for h in sorted(handlers)))
+                print('\n'.join(f'  {deeplink}' for deeplink in sorted(handlers)))
             if op == helpers.setup.OP_LIST_APPLINKS:
-                print('\n'.join(f'  {h}' for h in sorted(handlers) if h.startswith('http')))
+                print('\n'.join(f'  {deeplink}' for deeplink in sorted(handlers) if deeplink.startswith('http')))
+
+    if op == helpers.setup.OP_CHECK_DALS:
+        dict = helpers.app_links.get_protocol_and_domain_dict(deeplinks)
+        for domain in dict:
+            for protocol in dict.get(domain):
+                url = protocol + '://' + domain
+                helpers.console.write_to_console('\nChecking DAL for ' + url, color=helpers.console.bcolors.OKBLUE)
+                os.system('curl ' + url + '/.well-known/assetlinks.json')
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.adb.check_device_configs(package, apk)
@@ -31,7 +40,6 @@ def main(strings_file, manifest_file, package, apk, op):
         print('Finished writing POC to local file ' + POC_FILENAME)
 
     if op == helpers.setup.OP_LAUNCH_POC:
-        helpers.adb.check_device_configs(package, apk)
         os.system('adb push ./' + POC_FILENAME + ' ' + POC_DEST_DIR)
         os.system('adb shell am start -n ' + CHROME_PACKAGE + ' -a android.intent.action.VIEW -d "file://' + POC_DEST_DIR + POC_FILENAME + '"')
 
@@ -47,18 +55,15 @@ def main(strings_file, manifest_file, package, apk, op):
 
 if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()
-    if args.manifest is None or args.strings is None:
-        if args.apk is None:
-            write_to_console('You must specify either an APK or a manifest and strings file path', helpers.console.bcolors.FAIL)
-        else:
-            helpers.setup.decompile_apk(args.apk)
-            apk_filename = os.path.basename(args.apk).split('.apk')[0]
-            strings_file_path = open(apk_filename + DEFAULT_STRINGS_FILE)
-            manifest_file_path = open(apk_filename + DEFAULT_MANIFEST_FILE)
-            main(strings_file_path, manifest_file_path, args.package, args.apk, args.op)
-            if args.clear:
-                print('Clearing decompiled directory')
-                os.system('rm -rf ' + dir)
+    if args.apk is not None:
+        helpers.setup.decompile_apk(args.apk)
+        apk_filename = os.path.basename(args.apk).split('.apk')[0]
+        strings_file_path = open(apk_filename + DEFAULT_STRINGS_FILE)
+        manifest_file_path = open(apk_filename + DEFAULT_MANIFEST_FILE)
+        main(strings_file_path, manifest_file_path, args.package, args.apk, args.op)
+        if args.clear:
+            print('Clearing decompiled directory')
+            os.system('rm -rf ' + dir)
     else:
         strings_file_path = open(args.strings)
         manifest_file_path = open(args.manifest)

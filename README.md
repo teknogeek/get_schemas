@@ -10,6 +10,7 @@ This tool supports 5 operation modes:
 
 * `list-all`: simple enumeration, lists all deep links registered by the application regardless of format
 * `list-applinks`: lists all Android App Links registered by the application
+* `check-dals`: for each protocol+domain used for a registered App Link, fetches the DAL file under `/.well-known/assetlinks.json` as specified [here](https://developer.android.com/training/app-links/verify-site-associations).
 * `adb-test`: uses `adb` to open all of the application's App Links and allows you to check if they're being automatically opened by the intended application
 * `build-poc`: creates an HTML page with links to all of the registered Android App Links, in order to simplify the process of testing their verification process
 * `launch-poc`: sends the HTML page created on the previus mode to a connected device (via `adb`), and opens it with Chrome
@@ -49,6 +50,73 @@ optional arguments:
 ```
 
 ## Examples
+
+**Use an APK to print DALs for all registered App Links**
+
+```
+~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
+  -op check-dals \
+  -apk com.twitter.android_2021-08-16.apk
+
+I: Using Apktool 2.5.0 on com.twitter.android_2021-08-16.apk
+I: Loading resource table...
+I: Decoding AndroidManifest.xml with resources...
+I: Loading resource table from file: /Users/inesmartins/Library/apktool/framework/1.apk
+I: Regular manifest package...
+I: Decoding file-resources...
+I: Decoding values */* XMLs...
+I: Baksmaling classes.dex...
+I: Baksmaling classes2.dex...
+I: Baksmaling classes3.dex...
+I: Baksmaling classes4.dex...
+I: Baksmaling classes5.dex...
+I: Baksmaling classes6.dex...
+I: Baksmaling classes7.dex...
+I: Copying assets and libs...
+I: Copying unknown files...
+I: Copying original files...
+I: Copying META-INF/services directory
+
+Checking DAL for https://mobile.twitter.com
+[
+  ...
+  {
+    "relation": [
+      "delegate_permission/common.get_login_creds",
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.twitter.android",
+      "sha256_cert_fingerprints": [
+        "0F:D9:A0:CF:B0:7B:65:95:09:97:B4:EA:EB:DC:53:93:13:92:39:1A:A4:06:53:8A:3B:04:07:3B:C2:CE:2F:E9"
+      ]
+    }
+  },...
+]
+Checking DAL for https://mobile.twitter.com
+[
+  ...
+  {
+    "relation": [
+      "delegate_permission/common.get_login_creds",
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.twitter.android",
+      "sha256_cert_fingerprints": [
+        "0F:D9:A0:CF:B0:7B:65:95:09:97:B4:EA:EB:DC:53:93:13:92:39:1A:A4:06:53:8A:3B:04:07:3B:C2:CE:2F:E9"
+      ]
+    }
+  },
+  ...
+]
+...
+```
+
 
 **Use an APK to automatically test all of the App Links using ADB**
 
