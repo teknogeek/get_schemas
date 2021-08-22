@@ -15,8 +15,8 @@ def get_protocol_and_domain_dict(deeplinks):
                     else:
                         domains[domain] = ['http']
                 else:
-                    if is_https:
+                    if is_https and 'https' not in domains.get(domain):
                         domains[domain].append('https')
-                    else:
+                    elif 'http' not in domains.get(domain):
                         domains[domain].append('http')
     return domains
