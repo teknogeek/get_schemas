@@ -63,10 +63,10 @@ def get_parsed_args():
             error_msg = 'You must specify either an APK or a manifest and strings file path'
             helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
             exit()
-        if args.op == OP_CHECK_DALS:
-            error_msg = 'You need to use the -apk option when using the "check-dals" operation mode'
-            helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
-            exit()
+    elif args.op == OP_CHECK_DALS:
+        error_msg = 'You need to use the -apk option when using the "check-dals" operation mode'
+        helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
+        exit()
     if args.op not in OP_MODES:
         error_msg = 'The specified operation mode is not supported.'
         error_msg += '\nSupported operation modes: "' + '", "'.join(OP_MODES) + '".'
