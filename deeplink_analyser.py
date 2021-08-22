@@ -44,7 +44,10 @@ def main(strings_file, manifest_file, package, apk, op):
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
-        print('Finished writing POC to local file ' + POC_FILENAME)
+        helpers.console.write_to_console(
+            'Finished writing POC to local file ' + POC_FILENAME, 
+            helpers.console.bcolors.OKGREEN
+        )
 
     if op == helpers.setup.OP_LAUNCH_POC:
         helpers.adb.check_device_requirements(package, apk, ADB_PATH)
