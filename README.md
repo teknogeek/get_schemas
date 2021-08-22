@@ -32,11 +32,12 @@ python3 -m pip install -r requirements.txt
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py --help
 usage: deeplink_analyser.py [-h] [-apk FILE] [-m FILE] [-s FILE] -op OP
-                            [-p PACKAGE] [--clear]
+                            [-p PACKAGE] [-v] [-c]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -apk FILE             Path to the APK (required for `check-dals` operation mode)
+  -apk FILE             Path to the APK (rsequired for `check-dals` operation
+                        mode)
   -m FILE, --manifest FILE
                         Path to the AndroidManifest.xml file
   -s FILE, --strings FILE
@@ -45,9 +46,11 @@ optional arguments:
                         Operation mode: "list-all", "list-applinks", "check-
                         dals", "build-poc", "launch-poc", "adb-test".
   -p PACKAGE, --package PACKAGE
-                        Package identifier, e.g.: com.myorg.appname (required
-                        for any operation that interacts with the device)
-  --clear               Whether or not the script should delete the decompiled
+                        Package identifier, e.g.: "com.myorg.appname"
+                        (required for any operation that interacts with the
+                        device)
+  -v, --verbose         Verbose mode
+  -c, --clear           Whether or not the script should delete the decompiled
                         directory after running (default: False)
 ```
 
@@ -63,7 +66,9 @@ optional arguments:
 
 ### Use an (already decompiled) APK to check for DALs for all App Links
 
-![Screenshot 2021-08-22 at 17 18 21](https://user-images.githubusercontent.com/39055313/130362417-97c84024-81d4-4fe6-a870-d5d04939750d.png)
+![Screenshot 2021-08-22 at 18 03 08](https://user-images.githubusercontent.com/39055313/130363710-e4886e49-0e9f-41fe-86c8-1a35e85418d9.png)
+
+Note that you can also specify the `-v` flag to print the entire DAL file.
 
 ### Use an (already decompiled) APK to automatically test all of the App Links using ADB
 
