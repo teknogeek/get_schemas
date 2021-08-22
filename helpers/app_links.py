@@ -13,7 +13,6 @@ def get_domains_for_applinks(deeplinks):
         for deeplink in sorted(handlers):
             if deeplink.startswith('http'):
                 domains.append(urlparse(deeplink).netloc)
-                print(urlparse(deeplink).netloc)
     return set(domains)
 
 
