@@ -25,8 +25,8 @@ def main(strings_file, manifest_file, package, apk, op):
                 print('\n'.join(f'  {deeplink}' for deeplink in sorted(handlers)))
             if op == helpers.setup.OP_LIST_APPLINKS:
                 print('\n'.join(f'  {deeplink}' for deeplink in sorted(handlers) if deeplink.startswith('http')))
-
-    if op == helpers.setup.OP_CHECK_DALS:
+    
+    elif op == helpers.setup.OP_CHECK_DALS:
         dict = helpers.app_links.get_protocol_and_domain_dict(deeplinks)
         for domain in dict:
             for protocol in dict.get(domain):
@@ -34,24 +34,25 @@ def main(strings_file, manifest_file, package, apk, op):
                 helpers.console.write_to_console('\nChecking DAL for ' + url, color=helpers.console.bcolors.OKBLUE)
                 os.system('curl ' + url + '/.well-known/assetlinks.json')
 
-    if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
+    else:
         helpers.adb.check_device_configs(package, apk)
-        helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
-        print('Finished writing POC to local file ' + POC_FILENAME)
 
-    if op == helpers.setup.OP_LAUNCH_POC:
-        os.system('adb push ./' + POC_FILENAME + ' ' + POC_DEST_DIR)
-        os.system('adb shell am start -n ' + CHROME_PACKAGE + ' -a android.intent.action.VIEW -d "file://' + POC_DEST_DIR + POC_FILENAME + '"')
+        if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
+            helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
+            print('Finished writing POC to local file ' + POC_FILENAME)
 
-    if op == helpers.setup.OP_TEST_WITH_ADB:
-        helpers.adb.check_device_configs(package, apk)
-        for activity, handlers in deeplinks.items():
-            write_to_console('\nActivity: ' + activity + '\n', helpers.console.bcolors.BOLD)
-            for deeplink in handlers:
-                if deeplink.startswith('http'):
-                    write_to_console('\nTesting deeplink: ' + deeplink, helpers.console.bcolors.OKGREEN)
-                    os.system('adb shell am start -a android.intent.action.VIEW -d "' + deeplink + '"')
-                    input("Press 'Enter' to test next App Link ...")
+        if op == helpers.setup.OP_LAUNCH_POC:
+            os.system('adb push ./' + POC_FILENAME + ' ' + POC_DEST_DIR)
+            os.system('adb shell am start -n ' + CHROME_PACKAGE + ' -a android.intent.action.VIEW -d "file://' + POC_DEST_DIR + POC_FILENAME + '"')
+
+        if op == helpers.setup.OP_TEST_WITH_ADB:
+            for activity, handlers in deeplinks.items():
+                write_to_console('\nActivity: ' + activity + '\n', helpers.console.bcolors.BOLD)
+                for deeplink in handlers:
+                    if deeplink.startswith('http'):
+                        write_to_console('\nTesting deeplink: ' + deeplink, helpers.console.bcolors.OKGREEN)
+                        os.system('adb shell am start -a android.intent.action.VIEW -d "' + deeplink + '"')
+                        input("Press 'Enter' to test next App Link ...")
 
 if __name__ == '__main__':
     args = helpers.setup.get_parsed_args()

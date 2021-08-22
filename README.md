@@ -117,7 +117,6 @@ Checking DAL for https://mobile.twitter.com
 ...
 ```
 
-
 **Use an APK to automatically test all of the App Links using ADB**
 
 ```
