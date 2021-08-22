@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from deeplink_analyser import APKTOOL_PATH
 import helpers.get_schemes
 import helpers.adb
 import helpers.console
@@ -75,4 +76,4 @@ def get_parsed_args():
     return args
 
 def decompile_apk(apk):
-    os.system("apktool d " + apk)
+    os.system(APKTOOL_PATH + ' d ' + apk)

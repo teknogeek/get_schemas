@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 from typing import List
+import helpers.console
 import subprocess
 import os
 
-ADB_PATH="adb"
+CHROME_PACKAGE = 'com.android.chrome/com.google.android.apps.chrome.Main'
 
-def adbdevices(adbpath=ADB_PATH):
+def get_adb_devices(adbpath):
     lines = subprocess.check_output([adbpath, 'devices']).splitlines()
     devices = []
     for line in lines:
@@ -14,30 +15,33 @@ def adbdevices(adbpath=ADB_PATH):
             devices.append(line.decode().split('\t')[0])
     return set(devices)
 
-def adbshell(command, serial=None, adbpath=ADB_PATH):
+def package_is_installed(package, adbpath):
     args = [adbpath]
-    if serial is not None:
-        args.extend(['-s', serial])
-    args.extend(['shell', command])
-    return subprocess.check_output(args)
-
-def package_is_installed(package):
-    lines = adbshell('pm list packages -f').splitlines()
+    args.extend(['shell', 'pm list packages -f'])
+    lines = subprocess.check_output(args).splitlines()
     for line in lines:
         package_name = line.decode().split('apk=')[1]
         if package_name == package:
             return True
     return False
 
-def check_device_configs(package, apk):
-    devices = adbdevices()
+def check_device_requirements(package, apk, adbpath="adb"):
+    devices = get_adb_devices(adbpath)
     if len(devices) == 0:
-        print('No devices were detected by adb')
+        helpers.console.write_to_console('No devices detected by adb', helpers.console.bcolors.WARNING)
         exit()
-    if not package_is_installed(package):
+    if not package_is_installed(package, adbpath="adb"):
         if apk is None:
-            print('Package is not installed and APK was not specified ...')
+            error_msg = 'Package is not installed and APK was not specified ...'
+            helpers.console.write_to_console(error_msg, helpers.console.bcolors.WARNING)
             exit()
         else:
-            print('Package is not installed ...')
+            error_msg = 'Package is not installed ...'
+            helpers.console.write_to_console(error_msg, helpers.console.bcolors.OKBLUE)
             os.system("adb install " + apk)
+
+def write_file_to_device(file, dest, adbpath="adb"):
+    os.system(adbpath + ' push ./' + file + ' ' + dest)
+
+def open_file_in_device_with_chrome(filepath, adbpath="adb"):
+    os.system(adbpath + ' shell am start -n ' + CHROME_PACKAGE + ' -a android.intent.action.VIEW -d "file://' + filepath + '"')
