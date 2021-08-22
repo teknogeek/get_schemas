@@ -30,21 +30,22 @@ python3 -m pip install -r requirements.txt
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py --help
-usage: deeplink_analyser.py [-h] [-apk FILE] -p PACKAGE [-m FILE] [-s FILE]
-                            -op OP [--clear]
+usage: deeplink_analyser.py [-h] [-apk FILE] [-m FILE] [-s FILE] -op OP
+                            [-p PACKAGE] [--clear]
 
 optional arguments:
   -h, --help            show this help message and exit
   -apk FILE             Path to the APK
-  -p PACKAGE, --package PACKAGE
-                        Package identifier, e.g.: com.myorg.appname
   -m FILE, --manifest FILE
                         Path to the AndroidManifest.xml file
   -s FILE, --strings FILE
                         Path to the strings.xml file
   -op OP, --operation-mode OP
-                        Operation mode: "list-all", "list-applinks", "build-
-                        poc", "launch-poc", "adb-test".
+                        Operation mode: "list-all", "list-applinks", "check-
+                        dals", "build-poc", "launch-poc", "adb-test".
+  -p PACKAGE, --package PACKAGE
+                        Package identifier, e.g.: com.myorg.appname. Required
+                        for any operation that interacts with the device
   --clear               Whether or not the script should delete the decompiled
                         directory after running (default: False)
 ```
