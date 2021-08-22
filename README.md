@@ -66,59 +66,9 @@ optional arguments:
 
 ### Use an (already decompiled) APK to automatically test all of the App Links using ADB
 
-```
-~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
-	-op adb-test \
-	-p com.twitter.android 
-	-apk com.twitter.android_2021-08-16.apk
+![Screenshot 2021-08-22 at 16 58 38](https://user-images.githubusercontent.com/39055313/130361770-745db650-0973-489e-bbb5-968a42607fcb.png)
 
-I: Using Apktool 2.5.0 on com.twitter.android_2021-08-16.apk
-I: Loading resource table...
-I: Decoding AndroidManifest.xml with resources...
-I: Loading resource table from file: /Users/inesmartins/Library/apktool/framework/1.apk
-I: Regular manifest package...
-I: Decoding file-resources...
-I: Decoding values */* XMLs...
-I: Baksmaling classes.dex...
-I: Baksmaling classes2.dex...
-I: Baksmaling classes3.dex...
-I: Baksmaling classes4.dex...
-I: Baksmaling classes5.dex...
-I: Baksmaling classes6.dex...
-I: Baksmaling classes7.dex...
-I: Copying assets and libs...
-I: Copying unknown files...
-I: Copying original files...
-I: Copying META-INF/services directory
-com.twitter.app.profiles.ProfileActivity
-com.twitter.deeplink.implementation.UrlInterpreterActivity
-
-Activity: com.twitter.app.profiles.ProfileActivity
-
-
-Activity: com.twitter.deeplink.implementation.UrlInterpreterActivity
-
-
-Testing deeplink: https://ads.twitter.com/mobile
-Starting: Intent { act=android.intent.action.VIEW dat=https://ads.twitter.com/... }
-Press 'Enter' to test next App Link ...
-
-Testing deeplink: https://twitter-alternate.test-app.link
-Starting: Intent { act=android.intent.action.VIEW dat=https://twitter-alternate.test-app.link/... }
-Warning: Activity not started, its current task has been brought to the front
-Press 'Enter' to test next App Link ...
-
-Testing deeplink: https://twitter-alternate.app.link
-Starting: Intent { act=android.intent.action.VIEW dat=https://twitter-alternate.app.link/... }
-Press 'Enter' to test next App Link ...
-
-Testing deeplink: https://twitter.app.link
-Starting: Intent { act=android.intent.action.VIEW dat=https://twitter.app.link/... }
-Press 'Enter' to test next App Link ...
-[...]
-```
-
-**Use the manifest and the strings file to create a POC locally**
+### Use the manifest and the strings file to create a POC locally
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
@@ -129,7 +79,7 @@ Press 'Enter' to test next App Link ...
 Finished writing POC to local file poc.html
 ```
 
-**Use a (previous decompiled) APK to send the POC to the device and open it with Chrome**
+### Use an (already decompiled) APK to send the POC to the device and open it with Chrome**
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
