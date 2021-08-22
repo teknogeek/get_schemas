@@ -73,11 +73,11 @@ Note that the package was not installed on the phone previously, so the script i
 
 ### Use the manifest+strings file to create a local POC
 
-![Screenshot 2021-08-22 at 17 16 23](https://user-images.githubusercontent.com/39055313/130362354-a844c72f-11c2-44d0-9a1c-9d66771c915f.png)
+![Screenshot 2021-08-22 at 17 23 54](https://user-images.githubusercontent.com/39055313/130362596-a41d197a-2024-4650-b732-92eb71488700.png)
 
 ### Use an (already decompiled) APK to send the POC to the device via adb
 
-![Screenshot 2021-08-22 at 17 19 36](https://user-images.githubusercontent.com/39055313/130362455-f85096c4-92d8-4afc-befd-fc4e8be5ce78.png)
+![Screenshot 2021-08-22 at 17 24 43](https://user-images.githubusercontent.com/39055313/130362601-b70033b9-7109-470d-862c-0c8d9bdf3482.png)
 
 As a result, your Android device should display something like this:
 
