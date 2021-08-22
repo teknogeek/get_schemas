@@ -14,7 +14,6 @@ import subprocess
 APKTOOL_PATH = 'apktool'
 ADB_PATH = 'adb'
 KEYTOOL_PATH = 'keytool'
-DEFAULT_DAL_FILE = '/.well-known/assetlinks.json'
 DEFAULT_STRINGS_FILE = '/res/values/strings.xml'
 DEFAULT_MANIFEST_FILE = '/AndroidManifest.xml'
 POC_FILENAME = 'poc.html'
@@ -46,14 +45,11 @@ def main(strings_file, manifest_file, package, apk, op):
         for domain in domains:
             url = 'https://' + domain
             helpers.console.write_to_console('\nChecking DAL for ' + url, color=helpers.console.bcolors.OKBLUE)
-            dal = subprocess.Popen(
-                'curl ' + url + DEFAULT_DAL_FILE + ' -s', shell=True, stdout=subprocess.PIPE
-            ).stdout.read().decode()
-            if sha256 in dal:
+            if helpers.app_links.check_dal(url, sha256):
                 helpers.console.write_to_console('Certificate\'s SHA-256 was found inside DAL.', helpers.console.bcolors.OKGREEN)
             else:
                 helpers.console.write_to_console('Certificate\'s SHA-256 was not found inside DAL.', helpers.console.bcolors.FAIL)
-            print(dal)
+
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
