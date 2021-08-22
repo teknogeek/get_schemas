@@ -62,17 +62,17 @@ optional arguments:
 
 ### Use an (already decompiled) APK to check for DALs for all App Links
 
-![Screenshot 2021-08-22 at 16 43 53](https://user-images.githubusercontent.com/39055313/130361397-e7bd5323-42f2-4a79-a809-5c1bd8049f8a.png)
+![Screenshot 2021-08-22 at 17 18 21](https://user-images.githubusercontent.com/39055313/130362417-97c84024-81d4-4fe6-a870-d5d04939750d.png)
 
 ### Use an (already decompiled) APK to automatically test all of the App Links using ADB
 
 Note that the package was not installed on the phone previously, so the script installed the APK using `adb`.
 
-![Screenshot 2021-08-22 at 16 58 38](https://user-images.githubusercontent.com/39055313/130361770-745db650-0973-489e-bbb5-968a42607fcb.png)
+![Screenshot 2021-08-22 at 17 16 51](https://user-images.githubusercontent.com/39055313/130362373-0d8ec96d-0bcd-4a92-87a9-4cd19b54db10.png)
 
 ### Use the manifest and the strings file to create a POC locally
 
-![Screenshot 2021-08-22 at 17 04 30](https://user-images.githubusercontent.com/39055313/130361977-b264e082-c1ea-4b97-ac83-7eb46e21c15a.png)
+![Screenshot 2021-08-22 at 17 16 23](https://user-images.githubusercontent.com/39055313/130362354-a844c72f-11c2-44d0-9a1c-9d66771c915f.png)
 
 ### Use an (already decompiled) APK to send the POC to the device via adb
 
