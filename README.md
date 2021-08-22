@@ -6,11 +6,11 @@ You can see more info about this process [here](https://developer.android.com/tr
 
 ## How does it work?
 
-This tool supports 5 operation modes:
+This tool supports 6 operation modes:
 
 * `list-all`: simple enumeration, lists all deep links registered by the application regardless of format
 * `list-applinks`: lists all Android App Links registered by the application
-* `check-dals`: for each protocol+domain used for a registered App Link, fetches the DAL file under `/.well-known/assetlinks.json` as specified [here](https://developer.android.com/training/app-links/verify-site-associations).
+* `check-dals`: fetches the DAL file under `/.well-known/assetlinks.json` for each protocol + domain combination used for a registered App Link, as specified [here](https://developer.android.com/training/app-links/verify-site-associations)
 * `adb-test`: uses `adb` to open all of the application's App Links and allows you to check if they're being automatically opened by the intended application
 * `build-poc`: creates an HTML page with links to all of the registered Android App Links, in order to simplify the process of testing their verification process
 * `launch-poc`: sends the HTML page created on the previus mode to a connected device (via `adb`), and opens it with Chrome
@@ -30,21 +30,22 @@ python3 -m pip install -r requirements.txt
 
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py --help
-usage: deeplink_analyser.py [-h] [-apk FILE] -p PACKAGE [-m FILE] [-s FILE]
-                            -op OP [--clear]
+usage: deeplink_analyser.py [-h] [-apk FILE] [-m FILE] [-s FILE] -op OP
+                            [-p PACKAGE] [--clear]
 
 optional arguments:
   -h, --help            show this help message and exit
   -apk FILE             Path to the APK
-  -p PACKAGE, --package PACKAGE
-                        Package identifier, e.g.: com.myorg.appname
   -m FILE, --manifest FILE
                         Path to the AndroidManifest.xml file
   -s FILE, --strings FILE
                         Path to the strings.xml file
   -op OP, --operation-mode OP
-                        Operation mode: "list-all", "list-applinks", "build-
-                        poc", "launch-poc", "adb-test".
+                        Operation mode: "list-all", "list-applinks", "check-
+                        dals", "build-poc", "launch-poc", "adb-test".
+  -p PACKAGE, --package PACKAGE
+                        Package identifier, e.g.: com.myorg.appname. Required
+                        for any operation that interacts with the device
   --clear               Whether or not the script should delete the decompiled
                         directory after running (default: False)
 ```
@@ -124,6 +125,7 @@ Checking DAL for https://mobile.twitter.com
 	-op adb-test \
 	-p com.twitter.android 
 	-apk com.twitter.android_2021-08-16.apk
+
 I: Using Apktool 2.5.0 on com.twitter.android_2021-08-16.apk
 I: Loading resource table...
 I: Decoding AndroidManifest.xml with resources...
@@ -175,7 +177,6 @@ Press 'Enter' to test next App Link ...
 ```
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
 	-op build-poc \
-	-p com.twitter.android \
 	-m com.twitter.android_2021-08-16/AndroidManifest.xml \
 	-s com.twitter.android_2021-08-16/res/values/strings.xml 
 
@@ -188,7 +189,7 @@ Finished writing POC to local file poc.html
 ~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
 	-op launch-poc \
 	-p com.twitter.android \
-	-apk com.twitter.android_2021-08-16.apk 
+	-apk com.twitter.android_2021-08-16.apk
 
 Destination directory (/Users/inesmartins/Desktop/com.twitter.android_2021-08-16) already exists. Use -f switch if you want to overwrite it.
 Finished writing POC to local file poc.html
