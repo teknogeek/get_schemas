@@ -76,7 +76,7 @@ Note that the package was not installed on the phone previously, so the script i
 
 ### Use an (already decompiled) APK to send the POC to the device via adb
 
-[...]
+![Screenshot 2021-08-22 at 17 08 12](https://user-images.githubusercontent.com/39055313/130362092-d26a94e8-9550-426e-ae6f-1bd0a65bf98b.png)
 
 As a result, your Android device should display something like this:
 
