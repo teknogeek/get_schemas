@@ -32,11 +32,12 @@ def package_is_installed(package):
 def check_device_configs(package, apk):
     devices = adbdevices()
     if len(devices) == 0:
-        print("No devices were detected by adb")
+        print('No devices were detected by adb')
         exit()
     if not package_is_installed(package):
         if apk is None:
-            print("Package is not installed and APK was not specified ...")
+            print('Package is not installed and APK was not specified ...')
+            exit()
         else:
-            print("Package is not installed ...")
+            print('Package is not installed ...')
             os.system("adb install " + apk)

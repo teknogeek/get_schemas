@@ -49,7 +49,7 @@ def get_parsed_args():
                         dest="package",
                         required=False,
     					type=str,
-                        help='Package identifier, e.g.: com.myorg.appname. Required for any operation that interacts with the device')
+                        help='Package identifier, e.g.: "com.myorg.appname". Required for any operation that interacts with the device')
     parser.add_argument('--clear',
                         dest='clear',
                         required=False,
@@ -58,14 +58,19 @@ def get_parsed_args():
     args = parser.parse_args()
     if args.manifest is None or args.strings is None:
         if args.apk is None:
-            helpers.console.write_to_console('You must specify either an APK or a manifest and strings file path', helpers.console.bcolors.FAIL)
+            error_msg = 'You must specify either an APK or a manifest and strings file path'
+            helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
             exit()
     if args.op not in OP_MODES:
-        helpers.console.write_to_console('The specified operation mode is not supported.\nSupported operation modes: "' + '", "'.join(OP_MODES) + '".', helpers.console.bcolors.FAIL)
+        error_msg = 'The specified operation mode is not supported.'
+        error_msg += '\nSupported operation modes: "' + '", "'.join(OP_MODES) + '".'
+        helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
         exit()
     if args.op == OP_TEST_WITH_ADB or args.op == OP_LAUNCH_POC:
         if args.package is None:
-            helpers.console.write_to_console('You must specify the package id in order to use this operation mode', helpers.console.bcolors.FAIL)
+            error_msg = 'You must specify the package id in order to use this operation mode'
+            error_msg = 'You must specify the package id in order to use this operation mode'
+            helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
             exit()
     return args
 
