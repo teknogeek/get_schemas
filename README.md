@@ -146,17 +146,28 @@ I: Copying META-INF/services directory
 com.twitter.app.profiles.ProfileActivity
 com.twitter.deeplink.implementation.UrlInterpreterActivity
 
-Testing deeplink: https://mobile.twitter.com/.*
-Starting: Intent { act=android.intent.action.VIEW dat=https://mobile.twitter.com/... pkg=com.twitter.android }
-Press 'Enter' to test new intent ...
+Activity: com.twitter.app.profiles.ProfileActivity
 
-Testing deeplink: http://twitter.com/.*
-Starting: Intent { act=android.intent.action.VIEW dat=http://twitter.com/... pkg=com.twitter.android }
-Press 'Enter' to test new intent ...
 
-Testing deeplink: http://mobile.twitter.com/.*
-Starting: Intent { act=android.intent.action.VIEW dat=http://mobile.twitter.com/... pkg=com.twitter.android }
-Press 'Enter' to test new intent ...
+Activity: com.twitter.deeplink.implementation.UrlInterpreterActivity
+
+
+Testing deeplink: https://ads.twitter.com/mobile
+Starting: Intent { act=android.intent.action.VIEW dat=https://ads.twitter.com/... }
+Press 'Enter' to test next App Link ...
+
+Testing deeplink: https://twitter-alternate.test-app.link
+Starting: Intent { act=android.intent.action.VIEW dat=https://twitter-alternate.test-app.link/... }
+Warning: Activity not started, its current task has been brought to the front
+Press 'Enter' to test next App Link ...
+
+Testing deeplink: https://twitter-alternate.app.link
+Starting: Intent { act=android.intent.action.VIEW dat=https://twitter-alternate.app.link/... }
+Press 'Enter' to test next App Link ...
+
+Testing deeplink: https://twitter.app.link
+Starting: Intent { act=android.intent.action.VIEW dat=https://twitter.app.link/... }
+Press 'Enter' to test next App Link ...
 [...]
 ```
 
