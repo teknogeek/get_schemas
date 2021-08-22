@@ -26,6 +26,7 @@ python3 -m pip install -r requirements.txt
 1. If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have [apktool](https://ibotpeaches.github.io/Apktool/) installed and accessible on the `$PATH`;
 2. If you want to use the `adb-test` or `launch-poc` operation modes, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`;
 3. If you want to use the `check-dals` operation mode or if you want to be able to install the package on the device, you must use the `-apk` option instead of the manifest+strings file combination.
+4. If you want to use the `check-dals` operation mode, you need to have [keytool](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/keytool.html) installed and accessible on the `$PATH`;
 
 ## Usage
 
