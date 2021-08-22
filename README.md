@@ -10,7 +10,7 @@ This tool supports 6 operation modes:
 
 * `list-all`: simple enumeration, lists all deep links registered by the application regardless of format
 * `list-applinks`: lists all Android App Links registered by the application
-* `check-dals`: fetches the DAL file under `/.well-known/assetlinks.json` for each protocol + domain combination used for a registered App Link, as specified [here](https://developer.android.com/training/app-links/verify-site-associations)
+* `check-dals`: fetches the DAL file under `/.well-known/assetlinks.json` for each protocol + domain combination used for a registered App Link, as specified [here](https://developer.android.com/training/app-links/verify-site-associations), and checks for the `SHA-256` fingerpring of the app's signing certificate 
 * `adb-test`: uses `adb` to open all of the application's App Links and allows you to check if they're being automatically opened by the intended application
 * `build-poc`: creates an HTML page with links to all of the registered Android App Links, in order to simplify the process of testing their verification process
 * `launch-poc`: sends the HTML page created on the previus mode to a connected device (via `adb`), and opens it with Chrome
@@ -23,8 +23,9 @@ python3 -m pip install -r requirements.txt
 
 **Important Notes**
 
-1. If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have [apktool](https://ibotpeaches.github.io/Apktool/) installed and accessible on the `$PATH`.
-2. If you want to use the `adb-test` or `launch-poc` operation modes, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`.
+1. If you want to provide an `.apk` file instead of the `AndroidManifest.xml` and `strings.xml`, then you need to have [apktool](https://ibotpeaches.github.io/Apktool/) installed and accessible on the `$PATH`;
+2. If you want to use the `adb-test` or `launch-poc` operation modes, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`;
+3. If you want to use the `check-dals` operation mode or if you want to be able to install the package on the device, you must use the `-apk` option instead of the manifest+strings file combination.
 
 ## Usage
 
@@ -35,7 +36,7 @@ usage: deeplink_analyser.py [-h] [-apk FILE] [-m FILE] [-s FILE] -op OP
 
 optional arguments:
   -h, --help            show this help message and exit
-  -apk FILE             Path to the APK
+  -apk FILE             Path to the APK (required for `check-dals` operation mode)
   -m FILE, --manifest FILE
                         Path to the AndroidManifest.xml file
   -s FILE, --strings FILE
@@ -44,8 +45,8 @@ optional arguments:
                         Operation mode: "list-all", "list-applinks", "check-
                         dals", "build-poc", "launch-poc", "adb-test".
   -p PACKAGE, --package PACKAGE
-                        Package identifier, e.g.: com.myorg.appname. Required
-                        for any operation that interacts with the device
+                        Package identifier, e.g.: com.myorg.appname (required
+                        for any operation that interacts with the device)
   --clear               Whether or not the script should delete the decompiled
                         directory after running (default: False)
 ```

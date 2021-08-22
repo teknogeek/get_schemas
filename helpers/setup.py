@@ -29,7 +29,7 @@ def get_parsed_args():
                         required=False,
                         metavar="FILE", 
     					type=lambda x: helpers.setup.is_valid_file(parser, x),
-                        help='Path to the APK')
+                        help='Path to the APK (rsequired for `check-dals` operation mode)')
     parser.add_argument('-m', '--manifest', 
                         dest="manifest",
                         required=False,
@@ -51,7 +51,7 @@ def get_parsed_args():
                         dest="package",
                         required=False,
     					type=str,
-                        help='Package identifier, e.g.: "com.myorg.appname". Required for any operation that interacts with the device')
+                        help='Package identifier, e.g.: "com.myorg.appname" (required for any operation that interacts with the device)')
     parser.add_argument('--clear',
                         dest='clear',
                         required=False,
@@ -63,6 +63,10 @@ def get_parsed_args():
             error_msg = 'You must specify either an APK or a manifest and strings file path'
             helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
             exit()
+        if args.op == OP_CHECK_DALS:
+            error_msg = 'You need to use the -apk option when using the "check-dals" operation mode'
+            helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
+            exit()
     if args.op not in OP_MODES:
         error_msg = 'The specified operation mode is not supported.'
         error_msg += '\nSupported operation modes: "' + '", "'.join(OP_MODES) + '".'
@@ -70,7 +74,6 @@ def get_parsed_args():
         exit()
     if args.op == OP_TEST_WITH_ADB or args.op == OP_LAUNCH_POC:
         if args.package is None:
-            error_msg = 'You must specify the package id in order to use this operation mode'
             error_msg = 'You must specify the package id in order to use this operation mode'
             helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
             exit()

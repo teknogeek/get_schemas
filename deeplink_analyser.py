@@ -17,7 +17,7 @@ DEFAULT_MANIFEST_FILE = '/AndroidManifest.xml'
 POC_FILENAME = 'poc.html'
 POC_DEST_DIR = '/sdcard/'
 
-def main(strings_file, manifest_file, package, apk, op):
+def main(strings_file, manifest_file, package, apk, op, rsa_file):
     deeplinks = helpers.get_schemes.get_schemes(strings_file, manifest_file)
 
     if op == helpers.setup.OP_LIST_ALL or op == helpers.setup.OP_LIST_APPLINKS:
@@ -35,6 +35,8 @@ def main(strings_file, manifest_file, package, apk, op):
                 )
     
     if op == helpers.setup.OP_CHECK_DALS:
+        apk_cert = os.system('cat ' + rsa_file + ' | keytool -printcert ')
+        print(apk_cert)
         dict = helpers.app_links.get_protocol_and_domain_dict(deeplinks)
         for domain in dict:
             for protocol in dict.get(domain):
