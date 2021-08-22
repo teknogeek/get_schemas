@@ -27,6 +27,7 @@ python3 -m pip install -r requirements.txt
 2. If you want to use the `adb-test` or `launch-poc` operation modes, you need to have [adb](https://developer.android.com/studio/command-line/adb) installed and accessible on the `$PATH`;
 3. If you want to use the `check-dals` operation mode or if you want to be able to install the package on the device, you must use the `-apk` option instead of the manifest+strings file combination.
 4. If you want to use the `check-dals` operation mode, you need to have [keytool](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/keytool.html) installed and accessible on the `$PATH`;
+5. If you want to use the `adb-test`, `launch-poc` or `check-dals` operation modes you must specify the `-p` option.
 
 ## Usage
 
@@ -48,8 +49,7 @@ optional arguments:
                         dals", "build-poc", "launch-poc", "adb-test".
   -p PACKAGE, --package PACKAGE
                         Package identifier, e.g.: "com.myorg.appname"
-                        (required for any operation that interacts with the
-                        device)
+                        (required for some operation modes)
   -v, --verbose         Verbose mode
   -c, --clear           Whether or not the script should delete the decompiled
                         directory after running (default: False)
