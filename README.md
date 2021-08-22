@@ -66,32 +66,17 @@ optional arguments:
 
 ### Use an (already decompiled) APK to automatically test all of the App Links using ADB
 
+Note that the package was not installed on the phone previously, so the script installed the APK using `adb`.
+
 ![Screenshot 2021-08-22 at 16 58 38](https://user-images.githubusercontent.com/39055313/130361770-745db650-0973-489e-bbb5-968a42607fcb.png)
 
 ### Use the manifest and the strings file to create a POC locally
 
-```
-~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
-	-op build-poc \
-	-m com.twitter.android_2021-08-16/AndroidManifest.xml \
-	-s com.twitter.android_2021-08-16/res/values/strings.xml 
+![Screenshot 2021-08-22 at 17 04 30](https://user-images.githubusercontent.com/39055313/130361977-b264e082-c1ea-4b97-ac83-7eb46e21c15a.png)
 
-Finished writing POC to local file poc.html
-```
+### Use an (already decompiled) APK to send the POC to the device via adb
 
-### Use an (already decompiled) APK to send the POC to the device and open it with Chrome**
-
-```
-~ python3 Android-Deep-Link-Analyser/deeplink_analyser.py \
-	-op launch-poc \
-	-p com.twitter.android \
-	-apk com.twitter.android_2021-08-16.apk
-
-Destination directory (/Users/inesmartins/Desktop/com.twitter.android_2021-08-16) already exists. Use -f switch if you want to overwrite it.
-Finished writing POC to local file poc.html
-./poc.html: 1 file pushed, 0 skipped. 1.2 MB/s (1010 bytes in 0.001s)
-Starting: Intent { act=android.intent.action.VIEW dat=file:///sdcard/poc.html cmp=com.android.chrome/com.google.android.apps.chrome.Main }```
-```
+![Screenshot 2021-08-22 at 17 08 12](https://user-images.githubusercontent.com/39055313/130362092-d26a94e8-9550-426e-ae6f-1bd0a65bf98b.png)
 
 As a result, your Android device should display something like this:
 
