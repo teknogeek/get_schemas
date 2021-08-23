@@ -40,6 +40,10 @@ def main(strings_file, manifest_file, package, apk, op, verbose):
             KEYTOOL_PATH + ' -printcert -jarfile ' + apk, shell=True, stdout=subprocess.PIPE
         ).stdout.read().decode()
         sha256 = apk_cert.split('SHA256: ')[1].split('\n')[0]
+        write_to_console(
+            '\nThe APK\'s signing certificate\'s SHA-256 fingerprint is: \n' + sha256,
+            bcolors.HEADER
+        )
         domains = helpers.app_links.get_domains_for_applinks(deeplinks)
         for domain in domains:
             helpers.app_links.check_dal('https://' + domain, sha256, package, verbose)
