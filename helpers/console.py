@@ -13,3 +13,15 @@ class bcolors:
 
 def write_to_console(str, color):
     print(color + str + bcolors.ENDC)
+
+def print_deeplinks(deeplinks, only_applinks):
+    for deeplink in deeplinks:
+        is_applink = deeplink.startswith('http')
+        if not only_applinks or is_applink:
+            if is_applink:
+                if deeplinks[deeplink]:
+                    print('autoverify=true ' + bcolors.OKGREEN + deeplink + bcolors.ENDC)
+                else:
+                    print(bcolors.FAIL + 'autoverify=false ' + bcolors.ENDC + bcolors.OKGREEN + deeplink + bcolors.ENDC)
+            else:
+                write_to_console('\t\t' + deeplink, bcolors.OKGREEN)

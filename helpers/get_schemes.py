@@ -60,7 +60,9 @@ def get_schemes(strings, manifest):
                             if not no_port_path:
                                 if port: uri += f':{port}'
                                 if path: uri += f'{"/" if not path.startswith("/") else ""}{path}'
-                        
-                        activity_handlers[activity_name] = list(set(activity_handlers.get(activity_name, []) + [uri]))
+
+                        if activity_name not in activity_handlers:
+                            activity_handlers[activity_name] = {}
+                        activity_handlers[activity_name][uri] = 'android:autoVerify="true"' in str(intent_filter)
 
     return activity_handlers

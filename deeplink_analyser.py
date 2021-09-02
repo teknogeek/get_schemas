@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from re import S
-from helpers.console import write_to_console, bcolors
+from helpers.console import write_to_console, print_deeplinks, bcolors
 import helpers.setup
 import helpers.adb
 import helpers.get_schemes
@@ -24,16 +24,7 @@ def main(strings_file, manifest_file, package, apk, op, verbose):
     if op == helpers.setup.OP_LIST_ALL or op == helpers.setup.OP_LIST_APPLINKS:
         for activity, handlers in deeplinks.items():
             write_to_console('\n' + activity + '\n', bcolors.BOLD)
-            if op == helpers.setup.OP_LIST_ALL:
-                write_to_console(
-                    '\n'.join(f'  {deeplink}' for deeplink in sorted(handlers)), 
-                    bcolors.OKGREEN
-                )
-            if op == helpers.setup.OP_LIST_APPLINKS:
-                write_to_console(
-                    '\n'.join(f'  {deeplink}' for deeplink in sorted(handlers) if deeplink.startswith('http')), 
-                    bcolors.OKGREEN
-                )
+            print_deeplinks(handlers, only_applinks=op == helpers.setup.OP_LIST_APPLINKS)
     
     if op == helpers.setup.OP_CHECK_DALS:
         apk_cert = subprocess.Popen(
