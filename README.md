@@ -10,7 +10,7 @@ This tool supports 6 operation modes:
 
 * `list-all`: simple enumeration, lists all deep links registered by the application regardless of format
 * `list-applinks`: lists all Android App Links registered by the application
-* `verify-applinks`: fetches the DAL file under `/.well-known/assetlinks.json` for each domain used for a registered App Link, checks if the `SHA-256` fingerpring of the app's signing certificate is registered for the specified package and, if so, lists the relations
+* `verify-applinks`: for each App Link, displays checklist with each of the necessary steps for verification, indicates if they've been completed successfully
 * `adb-test`: uses `adb` to open all of the application's App Links and allows you to check if they're being automatically opened by the intended application
 * `build-poc`: creates an HTML page with links to all of the registered Android App Links, in order to simplify the process of testing their verification process
 * `launch-poc`: sends the HTML page created on the previus mode to a connected device (via `adb`), and opens it with Chrome
@@ -38,15 +38,15 @@ usage: deeplink_analyser.py [-h] [-apk FILE] [-m FILE] [-s FILE] -op OP
 
 optional arguments:
   -h, --help            show this help message and exit
-  -apk FILE             Path to the APK (rsequired for `verify-applinks` operation
-                        mode)
+  -apk FILE             Path to the APK (required for `verify-applinks`
+                        operation mode)
   -m FILE, --manifest FILE
                         Path to the AndroidManifest.xml file
   -s FILE, --strings FILE
                         Path to the strings.xml file
   -op OP, --operation-mode OP
-                        Operation mode: "list-all", "list-applinks", "check-
-                        dals", "build-poc", "launch-poc", "adb-test".
+                        Operation mode: "list-all", "list-applinks", "verify-
+                        applinks", "build-poc", "launch-poc", "adb-test".
   -p PACKAGE, --package PACKAGE
                         Package identifier, e.g.: "com.myorg.appname"
                         (required for some operation modes)
