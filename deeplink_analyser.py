@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 
-from re import S
 from helpers.console import write_to_console, print_deeplinks, bcolors
+from helpers.app_links import check_dals
 import helpers.setup
 import helpers.adb
 import helpers.get_schemes
 import helpers.poc
-import helpers.app_links
 import os
-import subprocess
 
 APKTOOL_PATH = 'apktool'
 ADB_PATH = 'adb'
-KEYTOOL_PATH = 'keytool'
 DEFAULT_STRINGS_FILE = '/res/values/strings.xml'
 DEFAULT_MANIFEST_FILE = '/AndroidManifest.xml'
 POC_FILENAME = 'poc.html'
@@ -22,22 +19,11 @@ def main(strings_file, manifest_file, package, apk, op, verbose):
     deeplinks = helpers.get_schemes.get_schemes(strings_file, manifest_file)
 
     if op == helpers.setup.OP_LIST_ALL or op == helpers.setup.OP_LIST_APPLINKS:
-        for activity, handlers in deeplinks.items():
-            write_to_console('\n' + activity + '\n', bcolors.BOLD)
-            print_deeplinks(handlers, only_applinks=op == helpers.setup.OP_LIST_APPLINKS)
-    
+        only_applinks = op == helpers.setup.OP_LIST_APPLINKS
+        print_deeplinks(deeplinks, only_applinks)
+
     if op == helpers.setup.OP_CHECK_DALS:
-        apk_cert = subprocess.Popen(
-            KEYTOOL_PATH + ' -printcert -jarfile ' + apk, shell=True, stdout=subprocess.PIPE
-        ).stdout.read().decode()
-        sha256 = apk_cert.split('SHA256: ')[1].split('\n')[0]
-        write_to_console(
-            '\nThe APK\'s signing certificate\'s SHA-256 fingerprint is: \n' + sha256,
-            bcolors.HEADER
-        )
-        domains = helpers.app_links.get_domains_for_applinks(deeplinks)
-        for domain in domains:
-            helpers.app_links.check_dal('https://' + domain, sha256, package, verbose)
+        check_dals(deeplinks, apk, package, verbose)
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
