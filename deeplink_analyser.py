@@ -22,7 +22,7 @@ def main(strings_file, manifest_file, package, apk, op, verbose):
         only_applinks = op == helpers.setup.OP_LIST_APPLINKS
         print_deeplinks(deeplinks, only_applinks)
 
-    if op == helpers.setup.OP_CHECK_DALS:
+    if op == helpers.setup.OP_VERIFY_APPLINKS:
         check_dals(deeplinks, apk, package, verbose)
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:

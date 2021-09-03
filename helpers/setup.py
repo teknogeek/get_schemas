@@ -10,11 +10,11 @@ import os
 
 OP_LIST_ALL = 'list-all'
 OP_LIST_APPLINKS = 'list-applinks'
-OP_CHECK_DALS = 'check-dals'
+OP_VERIFY_APPLINKS = 'verify-applinks'
 OP_BUILD_POC = 'build-poc'
 OP_LAUNCH_POC = 'launch-poc'
 OP_TEST_WITH_ADB = 'adb-test'
-OP_MODES = [OP_LIST_ALL, OP_LIST_APPLINKS, OP_CHECK_DALS, OP_BUILD_POC, OP_LAUNCH_POC, OP_TEST_WITH_ADB]
+OP_MODES = [OP_LIST_ALL, OP_LIST_APPLINKS, OP_VERIFY_APPLINKS, OP_BUILD_POC, OP_LAUNCH_POC, OP_TEST_WITH_ADB]
 
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
@@ -29,7 +29,7 @@ def get_parsed_args():
                         required=False,
                         metavar="FILE", 
     					type=lambda x: helpers.setup.is_valid_file(parser, x),
-                        help='Path to the APK (rsequired for `check-dals` operation mode)')
+                        help='Path to the APK (required for `verify-applinks` operation mode)')
     parser.add_argument('-m', '--manifest', 
                         dest="manifest",
                         required=False,
@@ -68,8 +68,8 @@ def get_parsed_args():
             error_msg = 'You must specify either an APK or a manifest and strings file path'
             helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
             exit()
-    elif args.op == OP_CHECK_DALS:
-        error_msg = 'You need to use the -apk option when using the "check-dals" operation mode'
+    elif args.op == OP_VERIFY_APPLINKS:
+        error_msg = 'You need to use the -apk option when using the "verify-applinks" operation mode'
         helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
         exit()
     if args.op not in OP_MODES:
@@ -77,7 +77,7 @@ def get_parsed_args():
         error_msg += '\nSupported operation modes: "' + '", "'.join(OP_MODES) + '".'
         helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
         exit()
-    if args.op == OP_TEST_WITH_ADB or args.op == OP_LAUNCH_POC or args.op == OP_CHECK_DALS:
+    if args.op == OP_TEST_WITH_ADB or args.op == OP_LAUNCH_POC or args.op == OP_VERIFY_APPLINKS:
         if args.package is None:
             error_msg = 'You must specify the package id in order to use this operation mode'
             helpers.console.write_to_console(error_msg, helpers.console.bcolors.FAIL)
