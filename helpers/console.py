@@ -20,4 +20,4 @@ def print_deeplinks(deeplinks, only_applinks):
         for deeplink in sorted(handlers.keys()):
             is_applink = deeplink.startswith('http')
             if not only_applinks or is_applink:
-                write_to_console('\t\t' + deeplink, bcolors.OKGREEN)
+                write_to_console(deeplink, bcolors.OKGREEN)
