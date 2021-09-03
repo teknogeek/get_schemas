@@ -67,7 +67,7 @@ optional arguments:
 
 ### Use an (already decompiled) APK to check for DALs for all App Links
 
-![Screenshot 2021-08-23 at 11 05 50](https://user-images.githubusercontent.com/39055313/130429697-c414eb85-6912-46cd-95d4-1f523a7b561a.png)
+![Screenshot 2021-09-03 at 10 38 28](https://user-images.githubusercontent.com/39055313/131984894-d1095aba-cce5-4135-aaf3-b7878b825357.png)
 
 Note that you can also specify the `-v` flag to print the entire DAL file.
 
