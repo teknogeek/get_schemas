@@ -87,7 +87,7 @@ Note that you can also specify the `-v` flag to print the entire DAL file.
 
 An example output for the Twitter Android app would be:
 
-![Screenshot 2021-09-03 at 12 26 28](https://user-images.githubusercontent.com/39055313/131998316-27730684-7a11-4bc2-9d84-70527ddf22ea.png)
+![Screenshot 2021-09-03 at 13 38 57](https://user-images.githubusercontent.com/39055313/132006669-b7653b92-5c80-414c-baa9-e0717bf5bc0e.png)
 
 ### Use an APK to automatically test all of the App Links using ADB
 
