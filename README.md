@@ -59,15 +59,15 @@ optional arguments:
 
 ### Use an APK to list all registered deep links
 
-![Screenshot 2021-08-22 at 16 43 03](https://user-images.githubusercontent.com/39055313/130361357-cfdfd212-88b7-4f7e-8c2f-64b28cf5e01b.png)
+![Screenshot 2021-09-03 at 10 40 33](https://user-images.githubusercontent.com/39055313/131985319-52dac3dc-e38a-4781-857c-a68ac7820121.png)
 
 ### Use the manifest+strings file to list all registered Android App links
 
-![Screenshot 2021-08-22 at 17 12 21](https://user-images.githubusercontent.com/39055313/130362237-61221613-45a3-4387-be95-ec1adb60b47a.png)
+![Screenshot 2021-09-03 at 10 41 28](https://user-images.githubusercontent.com/39055313/131985327-a71a2608-b299-498f-98b8-b3c077896c04.png)
 
 ### Use an (already decompiled) APK to check for DALs for all App Links
 
-![Screenshot 2021-08-23 at 11 05 50](https://user-images.githubusercontent.com/39055313/130429697-c414eb85-6912-46cd-95d4-1f523a7b561a.png)
+![Screenshot 2021-09-03 at 10 38 28](https://user-images.githubusercontent.com/39055313/131984894-d1095aba-cce5-4135-aaf3-b7878b825357.png)
 
 Note that you can also specify the `-v` flag to print the entire DAL file.
 
