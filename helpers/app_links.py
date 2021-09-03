@@ -21,8 +21,16 @@ def get_relation_in_dal(url, sha256, package, verbose):
         dal_json = json.loads(dal)
         for entry in dal_json:
             if 'target' in entry:
-                if 'package_name' in entry['target'] and 'sha256_cert_fingerprints' in entry['target']:
-                    if package == entry['target']['package_name'] and sha256 in entry['target']['sha256_cert_fingerprints']:
+                target = entry['target']
+                if 'namespace' not in target or target['namespace'] != 'android_app':
+                    continue
+                if 'package_name' not in target or target['package_name'] != package:
+                    continue
+                if 'sha256_cert_fingerprints' not in target:
+                    continue
+                registered_certs = target['sha256_cert_fingerprints']
+                for cert in registered_certs:
+                    if cert == sha256:
                         if 'relation' in entry:
                             return entry['relation']
                         else:
