@@ -12,7 +12,7 @@ DEFAULT_DAL_FILE = '/.well-known/assetlinks.json'
 def get_relation_in_dal(url, sha256, package, verbose):
     domain = urlparse(url).netloc
     dal = subprocess.Popen(
-        'curl https://' + domain + '/' + DEFAULT_DAL_FILE + ' -s', shell=True, stdout=subprocess.PIPE
+        'curl https://' + domain + DEFAULT_DAL_FILE + ' -s', shell=True, stdout=subprocess.PIPE
     ).stdout.read().decode()
     if verbose:
         print(dal)
@@ -37,24 +37,13 @@ def check_dals(deeplinks, apk, package, verbose):
         '\nThe APK\'s signing certificate\'s SHA-256 fingerprint is: \n' + sha256,
         bcolors.HEADER
     )
-    for deeplink in deeplinks:
-        if deeplink.startswith('http'):
-            helpers.console.write_to_console(
-                '\nChecking DAL for ' + deeplink + '\n', 
-                color=helpers.console.bcolors.BOLD
-            )
-            relation = get_relation_in_dal(deeplink, sha256, package, verbose)
-            if relation is not None:
-                helpers.console.write_to_console(
-                    'Certificate\'s SHA-256 is set for package "' + package + '" inside DAL.\n', 
-                    helpers.console.bcolors.OKGREEN
-                )
-                helpers.console.write_to_console(
-                    'Relation: ' + str(relation), 
-                    helpers.console.bcolors.OKCYAN
-                )
-            else:
-                helpers.console.write_to_console(
-                    'Certificate\'s SHA-256 was not found for package "' + package + '" inside DAL.', 
-                    helpers.console.bcolors.FAIL
-                )
+    for activity, handlers in deeplinks.items():
+        write_to_console('\n' + activity + '\n', bcolors.BOLD)
+        for deeplink in sorted(handlers.keys()):
+            if deeplink.startswith('http'):
+                relation = get_relation_in_dal(deeplink, sha256, package, verbose)
+                if relation is not None:
+                    helpers.console.write_to_console('verified:   ' + deeplink, helpers.console.bcolors.OKGREEN)
+                    helpers.console.write_to_console('\t    relation: ' + str(relation), helpers.console.bcolors.OKCYAN)
+                else:
+                    helpers.console.write_to_console('unverified: ' + deeplink, helpers.console.bcolors.FAIL) 
