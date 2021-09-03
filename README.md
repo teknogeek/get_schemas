@@ -59,11 +59,11 @@ optional arguments:
 
 ### Use an APK to list all registered deep links
 
-![Screenshot 2021-09-03 at 10 40 33](https://user-images.githubusercontent.com/39055313/131985319-52dac3dc-e38a-4781-857c-a68ac7820121.png)
+![Screenshot 2021-09-03 at 12 04 58](https://user-images.githubusercontent.com/39055313/131995932-a7331861-bef9-473b-aa67-7857e9f811b1.png)
 
 ### Use the manifest+strings file to list all registered Android App links
 
-![Screenshot 2021-09-03 at 10 41 28](https://user-images.githubusercontent.com/39055313/131985327-a71a2608-b299-498f-98b8-b3c077896c04.png)
+![Screenshot 2021-09-03 at 12 06 17](https://user-images.githubusercontent.com/39055313/131995955-f373670a-3906-4dd1-9278-ffbcf92367b8.png)
 
 ### Use an (already decompiled) APK to check for DALs for all App Links
 
