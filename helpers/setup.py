@@ -58,13 +58,13 @@ def get_parsed_args():
                         required=False,
                         action='store_true',
                         help='Verbose mode')
-    parser.add_argument('-c', '--clear',
+    parser.add_argument('--clear',
                         dest='clear',
                         default=False,
                         required=False,
                         action='store_true',
                         help='Whether or not the script should delete the decompiled directory after running (default: False)')
-    parser.add_argument('-c', '--ci-cd',
+    parser.add_argument('--ci-cd',
                         dest='cicd',
                         default=False,
                         required=False,

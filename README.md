@@ -57,8 +57,9 @@ optional arguments:
                         Package identifier, e.g.: "com.myorg.appname"
                         (required for some operation modes)
   -v, --verbose         Verbose mode
-  -c, --clear           Whether or not the script should delete the decompiled
+  --clear               Whether or not the script should delete the decompiled
                         directory after running (default: False)
+  --ci-cd               Ideal for running in CI/CD pipelines (default: False)
 ```
 
 ## Examples
