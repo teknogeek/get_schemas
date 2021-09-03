@@ -15,6 +15,12 @@ This tool supports 6 operation modes:
 * `build-poc`: creates an HTML page with links to all of the registered Android App Links, in order to simplify the process of testing their verification process
 * `launch-poc`: sends the HTML page created on the previus mode to a connected device (via `adb`), and opens it with Chrome
 
+It also supports 3 additional flags:
+
+* `clear`: removes the decompiled directory after execution
+* `verbose`: prints additional information about the execution
+* `ci-cd`: ideal for running in CI/CD pipelines, exits with `1` if any of the App Links are not correctly verified; automatically runs with `clear`and `verbose` flags
+
 ## Installation
 
 ```

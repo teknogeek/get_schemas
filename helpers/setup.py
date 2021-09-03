@@ -54,14 +54,22 @@ def get_parsed_args():
                         help='Package identifier, e.g.: "com.myorg.appname" (required for some operation modes)')
     parser.add_argument('-v', '--verbose',
                         dest='verbose',
+                        default=False,
                         required=False,
                         action='store_true',
                         help='Verbose mode')
     parser.add_argument('-c', '--clear',
                         dest='clear',
+                        default=False,
                         required=False,
                         action='store_true',
                         help='Whether or not the script should delete the decompiled directory after running (default: False)')
+    parser.add_argument('-c', '--ci-cd',
+                        dest='cicd',
+                        default=False,
+                        required=False,
+                        action='store_true',
+                        help='Ideal for running in CI/CD pipelines (default: False)')
     args = parser.parse_args()
     if args.manifest is None or args.strings is None:
         if args.apk is None:

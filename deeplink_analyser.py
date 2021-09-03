@@ -15,7 +15,7 @@ DEFAULT_MANIFEST_FILE = '/AndroidManifest.xml'
 POC_FILENAME = 'poc.html'
 POC_DEST_DIR = '/sdcard/'
 
-def main(strings_file, manifest_file, package, apk, op, verbose):
+def main(strings_file, manifest_file, package, apk, op, verbose, cicd):
     deeplinks = helpers.get_schemes.get_schemes(strings_file, manifest_file)
 
     if op == helpers.setup.OP_LIST_ALL or op == helpers.setup.OP_LIST_APPLINKS:
@@ -23,7 +23,7 @@ def main(strings_file, manifest_file, package, apk, op, verbose):
         print_deeplinks(deeplinks, only_applinks)
 
     if op == helpers.setup.OP_VERIFY_APPLINKS:
-        check_dals(deeplinks, apk, package, verbose)
+        check_dals(deeplinks, apk, package, verbose, cicd)
 
     if op == helpers.setup.OP_BUILD_POC or op == helpers.setup.OP_LAUNCH_POC:
         helpers.poc.write_deeplinks_to_file(deeplinks, POC_FILENAME)
@@ -54,11 +54,23 @@ if __name__ == '__main__':
         apk_filename = os.path.basename(args.apk).split('.apk')[0]
         strings_file_path = open(apk_filename + DEFAULT_STRINGS_FILE)
         manifest_file_path = open(apk_filename + DEFAULT_MANIFEST_FILE)
-        main(strings_file_path, manifest_file_path, args.package, args.apk, args.op, args.verbose)
-        if args.clear:
+        main(strings_file=strings_file_path, 
+            manifest_file=manifest_file_path, 
+            package=args.package, 
+            apk_filename=args.apk, 
+            op=args.op, 
+            verbose=args.verbose or args.cicd,
+            cicd=args.cicd)
+        if args.clear or args.cicd:
             print('Clearing decompiled directory')
             os.system('rm -rf ' + dir)
     else:
         strings_file_path = open(args.strings)
         manifest_file_path = open(args.manifest)
-        main(strings_file_path, manifest_file_path, args.package, args.apk, args.op, args.verbose)
+        main(strings_file=strings_file_path,
+             manifest_file=manifest_file_path, 
+             package=args.package, 
+             apk_filename=args.apk, 
+             op=args.op, 
+             verbose=args.verbose or args.cicd,
+             cicd=args.cicd)
