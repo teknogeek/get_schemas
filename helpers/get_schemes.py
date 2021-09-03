@@ -5,6 +5,12 @@ from bs4 import BeautifulSoup
 import itertools
 import re
 
+AUTOVERIFY_KEY = 'has-autoverify'
+INCLUDES_VIEW_ACTION_KEY = 'has-view-action'
+INCLUDES_BROWSABLE_CATEGORY_KEY = 'has-browsable-category'
+INCLUDES_DEFAULT_CATEGORY_KEY = 'has-default-category'
+
+
 is_scheme_data_tag = lambda tag: tag.name == 'data' and \
     any(f'android:{x}' in tag.attrs for x in \
         ('scheme', 'host', 'port', 'path', 'pathPrefix', 'pathPattern') \
@@ -63,6 +69,11 @@ def get_schemes(strings, manifest):
 
                         if activity_name not in activity_handlers:
                             activity_handlers[activity_name] = {}
-                        activity_handlers[activity_name][uri] = 'android:autoVerify="true"' in str(intent_filter)
+                        activity_handlers[activity_name][uri] = {
+                            AUTOVERIFY_KEY: 'android:autoVerify="true"' in str(intent_filter),
+                            INCLUDES_VIEW_ACTION_KEY: '<action android:name="android.intent.action.VIEW"/>' in str(intent_filter),
+                            INCLUDES_BROWSABLE_CATEGORY_KEY: 'android.intent.category.BROWSABLE' in str(intent_filter),
+                            INCLUDES_DEFAULT_CATEGORY_KEY: 'android.intent.category.DEFAULT' in str(intent_filter)
+                        }
 
     return activity_handlers
