@@ -41,9 +41,14 @@ def check_dals(deeplinks, apk, package, verbose):
         write_to_console('\n' + activity + '\n', bcolors.BOLD)
         for deeplink in sorted(handlers.keys()):
             if deeplink.startswith('http'):
+                if handlers[deeplink]:
+                    print('\nautoverify=true')
+                else:
+                    helpers.console.write_to_console('\nautoverify=false', bcolors.FAIL)
                 relation = get_relation_in_dal(deeplink, sha256, package, verbose)
                 if relation is not None:
                     helpers.console.write_to_console('verified:   ' + deeplink, helpers.console.bcolors.OKGREEN)
                     helpers.console.write_to_console('\t    relation: ' + str(relation), helpers.console.bcolors.OKCYAN)
                 else:
                     helpers.console.write_to_console('unverified: ' + deeplink, helpers.console.bcolors.FAIL) 
+
