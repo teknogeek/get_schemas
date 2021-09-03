@@ -59,31 +59,60 @@ optional arguments:
 
 ### Use an APK to list all registered deep links
 
-![Screenshot 2021-09-03 at 12 04 58](https://user-images.githubusercontent.com/39055313/131995932-a7331861-bef9-473b-aa67-7857e9f811b1.png)
+```
+~ python3 Android-Deep-Link-Analyser/deeplinks_analyser.py \
+-op list-all \
+-apk <path-to-apk>
+```
 
 ### Use the manifest+strings file to list all registered Android App links
 
-![Screenshot 2021-09-03 at 12 06 17](https://user-images.githubusercontent.com/39055313/131995955-f373670a-3906-4dd1-9278-ffbcf92367b8.png)
+```
+~ python3 Android-Deep-Link-Analyser/deeplinks_analyser.py \
+-op list-applinks \
+-m <path-to-android-manifest> \
+-s <path-to-strings-file>
+```
 
-### Use an (already decompiled) APK to check for DALs for all App Links
+### Use an APK to check for DALs for all App Links
 
-![Screenshot 2021-09-03 at 12 07 54](https://user-images.githubusercontent.com/39055313/131996077-89753211-4e73-4dac-980e-e467d9b214d0.png)
+```
+~ python3 Android-Deep-Link-Analyser/deeplinks_analyser.py \
+-op check-dals \
+-apk <path-to-apk> \
+-p <package-name>
+```
 
 Note that you can also specify the `-v` flag to print the entire DAL file.
 
-### Use an (already decompiled) APK to automatically test all of the App Links using ADB
+### Use an APK to automatically test all of the App Links using ADB
+
+```
+~ python3 Android-Deep-Link-Analyser/deeplinks_analyser.py \
+-op adb-test \
+-apk <path-to-apk> \
+-p <package-name>
+```
 
 Note that the package was not installed on the phone previously, so the script installed the APK using `adb`.
 
-![Screenshot 2021-08-22 at 17 16 51](https://user-images.githubusercontent.com/39055313/130362373-0d8ec96d-0bcd-4a92-87a9-4cd19b54db10.png)
-
 ### Use the manifest+strings file to create a local POC
 
-![Screenshot 2021-08-22 at 17 23 54](https://user-images.githubusercontent.com/39055313/130362596-a41d197a-2024-4650-b732-92eb71488700.png)
+```
+~ python3 Android-Deep-Link-Analyser/deeplinks_analyser.py \
+-op build-poc \
+-m <path-to-android-manifest> \
+-s <path-to-strings-file>
+```
 
-### Use an (already decompiled) APK to send the POC to the device via adb
+### Use an APK to send the POC to the device via adb
 
-![Screenshot 2021-08-22 at 17 24 43](https://user-images.githubusercontent.com/39055313/130362601-b70033b9-7109-470d-862c-0c8d9bdf3482.png)
+```
+~ python3 Android-Deep-Link-Analyser/deeplinks_analyser.py \
+-op launch-poc \
+-apk <path-to-apk> \
+-p <package-name>
+```
 
 As a result, your Android device should display something like this:
 
