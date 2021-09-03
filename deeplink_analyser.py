@@ -57,7 +57,7 @@ if __name__ == '__main__':
         main(strings_file=strings_file_path, 
             manifest_file=manifest_file_path, 
             package=args.package, 
-            apk_filename=args.apk, 
+            apk=args.apk, 
             op=args.op, 
             verbose=args.verbose or args.cicd,
             cicd=args.cicd)
@@ -70,7 +70,7 @@ if __name__ == '__main__':
         main(strings_file=strings_file_path,
              manifest_file=manifest_file_path, 
              package=args.package, 
-             apk_filename=args.apk, 
+             apk=args.apk, 
              op=args.op, 
              verbose=args.verbose or args.cicd,
              cicd=args.cicd)
