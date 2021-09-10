@@ -67,6 +67,12 @@ def check_manifest_keys_for_deeplink(handlers, deeplink, cicd):
 
 def check_dals(deeplinks, apk, package, verbose, cicd):
     sha256 = get_sha256_cert_fingerprint(apk)
+    if sha256 is None:
+        write_to_console(
+            'The APK\'s signing certificate\'s SHA-256 fingerprint could not be found',
+            bcolors.FAIL
+        )
+        exit(1)
     write_to_console(
         '\nThe APK\'s signing certificate\'s SHA-256 fingerprint is: \n' + sha256,
         bcolors.HEADER
