@@ -1,23 +1,32 @@
 #!/usr/bin/env python3
 
+from os import error
+from types import resolve_bases
 from helpers.apk_cert import get_sha256_cert_fingerprint
 from helpers.console import write_to_console, bcolors
 from urllib.parse import urlparse
+import requests
 import helpers.get_schemes
 import helpers.console
 import json
-import subprocess
 
+DEFAULT_ROBOTS_FILE = '/robots.txt'
 DEFAULT_DAL_FILE = '/.well-known/assetlinks.json'
 
-def get_relation_in_dal(url, sha256, package, verbose):
+def get_dal(url):
     domain = urlparse(url).netloc
-    dal = subprocess.Popen(
-        'curl https://' + domain + DEFAULT_DAL_FILE + ' -s', shell=True, stdout=subprocess.PIPE
-    ).stdout.read().decode()
-    if verbose:
-        print(dal)
+    res = requests.get('https://' + domain + DEFAULT_DAL_FILE)
+    if res.status_code != 200:
+        raise Exception('DAL should be returned with status code 200, not ' + str(res.status_code) + '.')
+    if 'Content-Type' not in res.headers or 'application/json' not in res.headers['Content-Type']:
+        raise Exception('DAL should be served with \"application/json\" content type.')
+    return res.text
+
+def get_relation_list_in_dal(url, sha256, package, verbose):
     try:
+        dal = get_dal(url)
+        if verbose:
+            print(dal)
         dal_json = json.loads(dal)
         for entry in dal_json:
             if 'target' in entry:
@@ -35,7 +44,8 @@ def get_relation_in_dal(url, sha256, package, verbose):
                             return entry['relation']
                         else:
                             return []
-    except:
+    except Exception as err:
+        helpers.console.write_to_console('x ' + str(err), bcolors.FAIL)
         return None
     return None
 
@@ -83,11 +93,19 @@ def check_dals(deeplinks, apk, package, verbose, cicd):
             if deeplink.startswith('http'):
                 print('Checking ' + deeplink)
                 check_manifest_keys_for_deeplink(handlers, deeplink, cicd)
-                relation = get_relation_in_dal(deeplink, sha256, package, verbose)
-                if relation is not None:
-                    helpers.console.write_to_console('✓ DAL verified', helpers.console.bcolors.OKGREEN)
-                    helpers.console.write_to_console('  relation: ' + str(relation) + '\n', helpers.console.bcolors.OKCYAN)
+                relation_list = get_relation_list_in_dal(deeplink, sha256, package, verbose)
+                if relation_list is not None:
+                    helpers.console.write_to_console('✓ DAL verified\n', helpers.console.bcolors.OKGREEN)
+                    print('  Relations: ')
+                    for relation in relation_list:
+                        if 'delegate_permission/common.handle_all_urls' in relation or 'delegate_permission/common.get_login_creds' in relation:
+                            helpers.console.write_to_console('    - [Standard] ' + relation, helpers.console.bcolors.OKCYAN)
+                        else:
+                            helpers.console.write_to_console('    - [Custom]   ' + relation, helpers.console.bcolors.WARNING)
                 else:
                     helpers.console.write_to_console('x DAL verification failed\n', helpers.console.bcolors.FAIL)
                     if cicd:
                         exit(1)
+                print()
+    
+    print('Read more about relation strings here: https://developers.google.com/digital-asset-links/v1/relation-strings\n')
