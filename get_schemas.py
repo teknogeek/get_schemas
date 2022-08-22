@@ -4,7 +4,6 @@ import argparse
 from bs4 import BeautifulSoup
 import itertools
 import re
-import sys
 
 is_scheme_data_tag = lambda tag: tag.name == 'data' and \
     any(f'android:{x}' in tag.attrs for x in \
@@ -13,7 +12,7 @@ is_scheme_data_tag = lambda tag: tag.name == 'data' and \
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--manifest', 
+    parser.add_argument('-m', '--manifest',
                         required=False,
                         default='AndroidManifest.xml',
                         type=argparse.FileType('r'),
@@ -21,7 +20,7 @@ def main():
     parser.add_argument('-s', '--strings',
                         required=False,
                         default='res/values/strings.xml',
-                        type=argparse.FileType('r'), 
+                        type=argparse.FileType('r'),
                         help='Path to strings.xml (default: ./res/values/strings.xml)')
     args = parser.parse_args()
 
@@ -37,19 +36,19 @@ def main():
         scheme_items = intent_filter.findAll(is_scheme_data_tag)
         if len(scheme_items) > 0:
             activity_name = None
-            
-            # find activity name from parent
-            parent_elem = intent_filter.find_parent(['activity', 'activity-alias', 'service', 'receiver'])
-            if parent_elem:
-                # parent type
-                p_type = parent_elem.name
-                if p_type in ['activity', 'service', 'receiver']:
-                    activity_name = parent_elem['android:name']
-                elif p_type == 'activity-alias':
-                    target_activity_name = parent_elem['android:targetActivity']
-                    target_activity = manifest_xml.find('activity', {'android:name': target_activity_name})
-                    if target_activity:
-                        activity_name = target_activity['android:name']
+            activity_exported = False
+
+            target_activity = intent_filter.find_parent(['activity', 'activity-alias', 'service', 'receiver'])
+            if not target_activity:
+                continue
+
+            if target_activity.name == 'activity-alias':
+                target_activity_name = target_activity['android:targetActivity']
+                target_activity = manifest_xml.find('activity', {'android:name': target_activity_name})
+
+            if target_activity:
+                activity_name = target_activity.get('android:name', None)
+                activity_exported = bool(target_activity.get('android:exported', False))
 
             if activity_name is not None:
                 schemes, hosts, ports, paths = [], [], [], []
@@ -57,7 +56,7 @@ def main():
                     schemes.append(item.get('android:scheme'))
                     hosts.append(item.get('android:host'))
                     ports.append(item.get('android:port'))
-                    
+
                     for k in ('path', 'pathPrefix', 'pathPattern'):
                         paths.append(item.get(f'android:{k}'))
 
@@ -74,12 +73,13 @@ def main():
                             if not no_port_path:
                                 if port: uri += f':{port}'
                                 if path: uri += f'{"/" if not path.startswith("/") else ""}{path}'
-                        
-                        activity_handlers[activity_name] = list(set(activity_handlers.get(activity_name, []) + [uri]))
 
-    for activity, handlers in activity_handlers.items():
-        print(activity)
-        print('\n'.join(f'  {h}' for h in sorted(handlers)))
+                        activity_key = (activity_name, activity_exported)
+                        activity_handlers[activity_key] = activity_handlers.get(activity_key, []) + [uri]
+
+    for (activity, exported), handlers in activity_handlers.items():
+        print(f'{activity} (exported={exported})')
+        print('\n'.join(f'  {h}' for h in sorted(set(handlers))))
 
 
 if __name__ == '__main__':

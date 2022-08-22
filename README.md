@@ -38,9 +38,9 @@ optional arguments:
 
 ```
 $ python3 get_schemas.py -m ./com.twitter.android/AndroidManifest.xml -s ./com.twitter.android/res/values/strings.xml
-com.twitter.android.ProfileActivity
+com.twitter.android.ProfileActivity (exported=False)
   content://com.android.contacts
-com.twitter.app.deeplink.UrlInterpreterActivity
+com.twitter.app.deeplink.UrlInterpreterActivity (exported=False)
   http://mobile.twitter.com/.*
   http://twitter.com/.*
   http://www.twitter.com/.*
@@ -59,49 +59,5 @@ com.twitter.app.deeplink.UrlInterpreterActivity
   twitter://events/tv_show/.*
   twitter://explore
   twitter://flow/setup_profile
-  twitter://follow
-  twitter://followers/verified
-  twitter://front
-  twitter://golive
-  twitter://hashtag/.*
-  twitter://intent/favorite
-  twitter://intent/follow
-  twitter://intent/like
-  twitter://intent/retweet
-  twitter://interest_picker
-  twitter://internal/.*
-  twitter://list
-  twitter://lists
-  twitter://live/timeline/.*
-  twitter://login
-  twitter://login-token
-  twitter://mentions
-  twitter://messages
-  twitter://moment
-  twitter://moments
-  twitter://moments/guide
-  twitter://moments/list
-  twitter://moments/maker
-  twitter://news
-  twitter://photo
-  twitter://post
-  twitter://profiles/edit
-  twitter://quote
-  twitter://search
-  twitter://session/new
-  twitter://settings
-  twitter://share_via_dm
-  twitter://signup
-  twitter://status
-  twitter://stickers
-  twitter://storystream
-  twitter://switch_to_logged_in_account
-  twitter://teams_invitation
-  twitter://timeline
-  twitter://topics
-  twitter://trends
-  twitter://tweet
-  twitter://tweet_previews
-  twitter://unfollow
-  twitter://user
+...
 ```
