@@ -31,6 +31,10 @@ def main():
     raw_manifest = re.sub('"@string\/(?P<string_name>[^"]+)"', lambda g: '"{}"'.format(strings.get(g.group('string_name'), 'UNKNOWN_STRING')), raw_manifest)
     manifest_xml = BeautifulSoup(raw_manifest, 'xml')
 
+    for e in manifest_xml.findAll(True, {'android:exported': 'true'}):
+        print(f'Exported <{e.name}>: {e["android:name"]}')
+
+    print(f'\n{"-"*50}\n')
     activity_handlers = {}
     for intent_filter in manifest_xml.find_all('intent-filter'):
         scheme_items = intent_filter.findAll(is_scheme_data_tag)
