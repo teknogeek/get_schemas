@@ -15,12 +15,12 @@ def main():
     parser.add_argument('-m', '--manifest',
                         required=False,
                         default='AndroidManifest.xml',
-                        type=argparse.FileType('r'),
+                        type=argparse.FileType('r', encoding='utf-8'),
                         help='Path to AndroidManifest.xml (default: ./AndroidManifest.xml)')
     parser.add_argument('-s', '--strings',
                         required=False,
                         default='res/values/strings.xml',
-                        type=argparse.FileType('r'),
+                        type=argparse.FileType('r', encoding='utf-8'),
                         help='Path to strings.xml (default: ./res/values/strings.xml)')
     args = parser.parse_args()
 
