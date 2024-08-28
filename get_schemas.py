@@ -31,8 +31,9 @@ def main():
     raw_manifest = re.sub('"@string\/(?P<string_name>[^"]+)"', lambda g: '"{}"'.format(strings.get(g.group('string_name'), 'UNKNOWN_STRING')), raw_manifest)
     manifest_xml = BeautifulSoup(raw_manifest, 'xml')
 
-    for e in manifest_xml.findAll(True, {'android:exported': 'true'}):
-        print(f'Exported <{e.name}>: {e["android:name"]}')
+    exported_components = manifest_xml.findAll(True, {'android:exported': 'true'})
+    for (_type, _name) in sorted([(e.name, e["android:name"]) for e in exported_components], key=lambda x: x[0]):
+        print(f'Exported <{_type}>: {_name}')
 
     print(f'\n{"-"*50}\n')
     activity_handlers = {}
