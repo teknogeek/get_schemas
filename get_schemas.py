@@ -28,17 +28,17 @@ def main():
     strings = {d['name']: d.text for d in strings_xml.find_all('string', {'name': True})}
 
     raw_manifest = args.manifest.read()
-    raw_manifest = re.sub('"@string\/(?P<string_name>[^"]+)"', lambda g: '"{}"'.format(strings.get(g.group('string_name'), 'UNKNOWN_STRING')), raw_manifest)
+    raw_manifest = re.sub(r'"@string/(?P<string_name>[^"]+)"', lambda g: '"{}"'.format(strings.get(g.group('string_name'), 'UNKNOWN_STRING')), raw_manifest)
     manifest_xml = BeautifulSoup(raw_manifest, 'xml')
 
-    exported_components = manifest_xml.findAll(True, {'android:exported': 'true'})
+    exported_components = manifest_xml.find_all(True, {'android:exported': 'true'})
     for (_type, _name) in sorted([(e.name, e["android:name"]) for e in exported_components], key=lambda x: x[0]):
         print(f'Exported <{_type}>: {_name}')
 
     print(f'\n{"-"*50}\n')
     activity_handlers = {}
     for intent_filter in manifest_xml.find_all('intent-filter'):
-        scheme_items = intent_filter.findAll(is_scheme_data_tag)
+        scheme_items = intent_filter.find_all(is_scheme_data_tag)
         if len(scheme_items) > 0:
             activity_name = None
             activity_exported = False
